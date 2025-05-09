@@ -3,7 +3,7 @@ import type React from 'react';
 import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
-  Settings2, PenSquare, LayoutList, FileCode2, Wrench
+  Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks
 } from 'lucide-react';
 
 export interface ToolDefinition {
@@ -12,7 +12,7 @@ export interface ToolDefinition {
   description: string;
   icon: React.ElementType; // Lucide icon component
   pageTitle: string;
-  link: string; 
+  link: string;
   isComingSoon?: boolean;
   isExisting?: boolean; // To differentiate from new tools for UI logic if needed
   category?: 'Content Creation' | 'SEO & Marketing' | 'Business & Branding' | 'Productivity';
@@ -60,7 +60,18 @@ export const allTools: ToolDefinition[] = [
     isExisting: true,
     category: 'Content Creation',
   },
-  // New Tools
+  {
+    slug: 'seo-blog-package',
+    title: 'SEO Blog Package',
+    description: 'Generate a complete blog post: title, meta, outline, content, and SEO analysis.',
+    icon: PackageCheck,
+    pageTitle: 'SEO Blog Package Generator',
+    link: '/seo-blog-package',
+    isExisting: true,
+    isComingSoon: false,
+    category: 'Content Creation', // Changed from SEO & Marketing to align with content generation focus
+  },
+  // New Tools (Coming Soon)
   {
     slug: 'blog-workflow',
     title: 'Blog Workflow',
@@ -110,16 +121,6 @@ export const allTools: ToolDefinition[] = [
     link: '/book-writing',
     isComingSoon: true,
     category: 'Content Creation',
-  },
-  {
-    slug: 'seo-blog-package',
-    title: 'SEO Optimized Blog Package',
-    description: 'Generate a complete blog post: title, meta, outline, content, and SEO analysis.',
-    icon: PackageCheck,
-    pageTitle: 'SEO Optimized Blog Package',
-    link: '/seo-blog-package',
-    isComingSoon: true,
-    category: 'SEO & Marketing',
   },
   {
     slug: 'employee-handbook',

@@ -2,12 +2,12 @@
 "use client";
 
 import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
-import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem } from '@/lib/history-types';
+import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem, SeoBlogPackageHistoryItem } from '@/lib/history-types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags } from 'lucide-react';
+import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags, PackageCheck, ListOrdered } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,6 +30,8 @@ function getIconForType(type: GeneratedHistoryItem['type']) {
       return <PenSquare className="h-5 w-5 mr-2 text-primary" />;
     case 'CONTENT_IMPORT_REWRITE':
       return <FileCode2 className="h-5 w-5 mr-2 text-primary" />;
+    case 'SEO_BLOG_PACKAGE':
+      return <PackageCheck className="h-5 w-5 mr-2 text-primary" />;
     default:
       return <FileText className="h-5 w-5 mr-2 text-primary" />;
   }
@@ -43,6 +45,8 @@ function getTypeName(type: GeneratedHistoryItem['type']) {
       return "Content Writing";
     case 'CONTENT_IMPORT_REWRITE':
       return "Content Import & Rewrite";
+    case 'SEO_BLOG_PACKAGE':
+      return "SEO Blog Package";
     default:
       return "Generated Content";
   }
@@ -220,6 +224,37 @@ export function HistoryList() {
                       </Button>
                     </>
                   )}
+                  {item.type === 'SEO_BLOG_PACKAGE' && (
+                    <>
+                      <p><strong>Topic:</strong> {(item as SeoBlogPackageHistoryItem).input.topic}</p>
+                      <p><strong>Generated Title:</strong> {(item as SeoBlogPackageHistoryItem).output.title}</p>
+                      <p><strong>Suggested Keywords:</strong> {(item as SeoBlogPackageHistoryItem).output.suggestedKeywords}</p>
+                      <p><strong>SEO Score:</strong> <BarChart className="inline h-4 w-4 mr-1 align-text-bottom" /> {(item as SeoBlogPackageHistoryItem).output.seoScore}</p>
+                      
+                      <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1 flex items-center"><ListOrdered className="h-4 w-4 mr-1"/>Outline (Markdown):</h4>
+                        <div className="max-h-40 overflow-y-auto p-2 border rounded-md bg-background">
+                          <pre className="whitespace-pre-wrap text-xs">{(item as SeoBlogPackageHistoryItem).output.outline}</pre>
+                        </div>
+                        <Button size="xs" variant="outline" className="mt-1" onClick={() => handleCopyToClipboard((item as SeoBlogPackageHistoryItem).output.outline, "Outline")}>
+                          <Copy className="mr-1 h-3 w-3" /> Copy Outline
+                        </Button>
+                      </div>
+
+                      <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1">Content Body (Markdown):</h4>
+                        <div className="max-h-60 overflow-y-auto p-2 border rounded-md bg-background">
+                          <pre className="whitespace-pre-wrap text-xs">{(item as SeoBlogPackageHistoryItem).output.contentBody}</pre>
+                        </div>
+                        <Button size="xs" variant="outline" className="mt-1" onClick={() => handleCopyToClipboard((item as SeoBlogPackageHistoryItem).output.contentBody, "Content Body")}>
+                          <Copy className="mr-1 h-3 w-3" /> Copy Content Body
+                        </Button>
+                      </div>
+                      <Button size="sm" variant="outline" className="mt-2" onClick={() => handleCopyToClipboard(JSON.stringify((item as SeoBlogPackageHistoryItem).output, null, 2), "Full Package Output")}>
+                        <Copy className="mr-2 h-3 w-3" /> Copy Full Package
+                      </Button>
+                    </>
+                  )}
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -229,5 +264,3 @@ export function HistoryList() {
     </div>
   );
 }
-
-    
