@@ -3,7 +3,8 @@ import type React from 'react';
 import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
-  Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks
+  Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks,
+  Film // Added Film icon
 } from 'lucide-react';
 
 export interface ToolDefinition {
@@ -69,7 +70,7 @@ export const allTools: ToolDefinition[] = [
     link: '/seo-blog-package',
     isExisting: true,
     isComingSoon: false,
-    category: 'Content Creation', // Changed from SEO & Marketing to align with content generation focus
+    category: 'Content Creation', 
   },
   // New Tools (Coming Soon)
   {
@@ -182,8 +183,19 @@ export const allTools: ToolDefinition[] = [
     isComingSoon: true,
     category: 'Content Creation',
   },
+  {
+    slug: 'youtube-script-generator',
+    title: 'YouTube Script Generator',
+    description: 'Craft engaging scripts for your YouTube videos with AI, including hooks, structure, and calls to action.',
+    icon: Film, 
+    pageTitle: 'YouTube Script Generator',
+    link: '/youtube-script-generator',
+    isComingSoon: true,
+    category: 'Content Creation',
+  },
 ];
 
 export const getToolBySlug = (slug: string): ToolDefinition | undefined => {
   return allTools.find(tool => tool.slug === slug);
 };
+
