@@ -4,7 +4,7 @@ import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
   Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks,
-  Film, Youtube, Tags // Added Tags icon
+  Film, Youtube, Tags, Facebook // Added Facebook icon
 } from 'lucide-react';
 
 export interface ToolDefinition {
@@ -16,7 +16,7 @@ export interface ToolDefinition {
   link: string;
   isComingSoon?: boolean;
   isExisting?: boolean; // To differentiate from new tools for UI logic if needed
-  category?: 'Content Creation' | 'SEO & Marketing' | 'Business & Branding' | 'Productivity';
+  category?: 'Content Creation' | 'SEO & Marketing' | 'Business & Branding' | 'Productivity' | 'Social Media';
 }
 
 export const allTools: ToolDefinition[] = [
@@ -81,7 +81,7 @@ export const allTools: ToolDefinition[] = [
     link: '/youtube-title-generator',
     isExisting: true,
     isComingSoon: false,
-    category: 'SEO & Marketing',
+    category: 'Social Media',
   },
   {
     slug: 'youtube-description-tags',
@@ -92,7 +92,18 @@ export const allTools: ToolDefinition[] = [
     link: '/youtube-description-tags',
     isExisting: true,
     isComingSoon: false,
-    category: 'SEO & Marketing',
+    category: 'Social Media',
+  },
+  {
+    slug: 'facebook-title-generator',
+    title: 'Facebook Title Generator',
+    description: 'Craft engaging and click-worthy titles/headlines for your Facebook posts with AI assistance.',
+    icon: Facebook,
+    pageTitle: 'Facebook Title Generator',
+    link: '/facebook-title-generator',
+    isExisting: true,
+    isComingSoon: false,
+    category: 'Social Media',
   },
   // New Tools (Coming Soon)
   {
