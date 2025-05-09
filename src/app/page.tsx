@@ -1,9 +1,15 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Zap, PenSquare, Settings2, FileCode2, LayoutList, BarChart, BotMessageSquare } from "lucide-react";
+import { Zap, PenSquare, Settings2, FileCode2, LayoutList, BarChart, BotMessageSquare, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Logo } from "@/components/icons/logo";
+import { allTools } from "@/lib/tool-definitions";
+
+const existingToolsForLanding = allTools.filter(tool => tool.isExisting).slice(0, 3); // Show a few existing key tools
+const newToolsForLanding = allTools.filter(tool => tool.isComingSoon);
+
 
 export default function LandingPage() {
   return (
@@ -16,6 +22,7 @@ export default function LandingPage() {
           </Link>
           <nav className="space-x-2 sm:space-x-4 flex items-center">
             <Link href="#features" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors">Features</Link>
+            <Link href="#toolkit" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors">Toolkit</Link>
             {/* <Link href="#pricing" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors">Pricing</Link> */}
             <Button asChild size="sm" sm-size="default">
               <Link href="/dashboard">Get Started</Link>
@@ -53,35 +60,23 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* Core Features Section */}
         <section id="features" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">All The Tools You Need</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">Core Platform Features</h2>
             <p className="text-center text-muted-foreground mb-12 md:mb-16 max-w-2xl mx-auto">
-              Unlock the power of AI to create high-ranking content that engages your audience, optimizes for search engines, and boosts your online presence.
+              Powerful, intuitive tools designed to elevate your content strategy and search engine performance.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <FeatureHighlight
-                icon={<PenSquare className="h-10 w-10 text-primary" />}
-                title="AI Content Writer"
-                description="Generate unique articles and blog posts. Overcome writer's block and produce SEO-friendly content in minutes."
-              />
-              <FeatureHighlight
-                icon={<Settings2 className="h-10 w-10 text-primary" />}
-                title="Advanced SEO Optimizer"
-                description="Refine your content with AI-driven suggestions for titles, meta descriptions, and keywords to climb search rankings."
-              />
-              <FeatureHighlight
-                icon={<FileCode2 className="h-10 w-10 text-primary" />}
-                title="Smart Content Importer"
-                description="Fetch content from any URL and let our AI rewrite it into fresh, unique, and optimized material."
-              />
-              <FeatureHighlight
-                icon={<LayoutList className="h-10 w-10 text-primary" />}
-                title="Engaging Comparison Builder"
-                description="Create attractive side-by-side product or service comparisons that convert visitors and drive affiliate revenue."
-              />
-              <FeatureHighlight
+              {existingToolsForLanding.map(tool => (
+                <FeatureHighlight
+                  key={tool.slug}
+                  icon={<tool.icon className="h-10 w-10 text-primary" />}
+                  title={tool.title}
+                  description={tool.description}
+                />
+              ))}
+               <FeatureHighlight
                 icon={<BarChart className="h-10 w-10 text-primary" />}
                 title="Human-Centric Approach"
                 description="We focus on AI-enhanced, human-quality content to ensure AdSense compliance and genuine audience engagement."
@@ -91,9 +86,35 @@ export default function LandingPage() {
                 title="Intuitive & Easy to Use"
                 description="A clean, user-friendly interface makes powerful content tools accessible to everyone, regardless of technical skill."
               />
+               <FeatureHighlight
+                icon={<Sparkles className="h-10 w-10 text-primary" />}
+                title="More Tools Coming Soon!"
+                description="We're constantly expanding our toolkit. Check out our upcoming features below!"
+              />
             </div>
           </div>
         </section>
+        
+        {/* Expanded Toolkit Section */}
+        <section id="toolkit" className="py-16 md:py-24 bg-secondary/30">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">Explore Our Expanding Toolkit</h2>
+            <p className="text-center text-muted-foreground mb-12 md:mb-16 max-w-2xl mx-auto">
+              Discover specialized AI tools to tackle every aspect of your content and branding needs. Many more coming soon!
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {newToolsForLanding.map(tool => (
+                <FeatureHighlight
+                  key={tool.slug}
+                  icon={<tool.icon className="h-10 w-10 text-primary" />}
+                  title={tool.title + (tool.isComingSoon ? " (Coming Soon)" : "")}
+                  description={tool.description}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
 
         {/* Call to Action Section */}
         <section className="py-16 md:py-24 bg-gradient-to-tr from-primary/5 via-secondary/10 to-primary/5">

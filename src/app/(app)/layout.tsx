@@ -8,6 +8,7 @@ import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { allTools, getToolBySlug } from '@/lib/tool-definitions';
 
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -15,20 +16,33 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [pageTitle, setPageTitle] = React.useState("Dashboard"); 
 
   React.useEffect(() => {
-    if (pathname === "/dashboard") setPageTitle("Dashboard");
-    else if (pathname.startsWith("/seo-optimizer")) setPageTitle("SEO Optimizer");
-    else if (pathname.startsWith("/content-writer")) setPageTitle("Content Writer");
-    else if (pathname.startsWith("/content-importer")) setPageTitle("Content Importer");
-    else if (pathname.startsWith("/history")) setPageTitle("Content History");
-    else if (pathname.startsWith("/comparison-builder")) setPageTitle("Comparison Builder");
-    else if (pathname.startsWith("/comparisons")) {
+    // Remove leading slash for matching with slugs
+    const currentSlug = pathname.startsWith('/') ? pathname.substring(1) : pathname;
+    const tool = getToolBySlug(currentSlug);
+
+    if (tool) {
+      setPageTitle(tool.pageTitle);
+    } else if (pathname === "/dashboard") {
+      setPageTitle("Dashboard");
+    } else if (pathname.startsWith("/history")) {
+      setPageTitle("Content History");
+    } else if (pathname.startsWith("/comparisons")) {
         if (pathname.match(/^\/comparisons\/[^/]+$/)) { // Matches /comparisons/[id]
             setPageTitle("View Comparison Details");
         } else {
             setPageTitle("View Comparisons");
         }
+    } else {
+      // Fallback for any other pages or if a tool is somehow not found by slug
+      // Capitalize first letter of the slug parts
+      const pathParts = currentSlug.split('/').filter(Boolean);
+      if (pathParts.length > 0) {
+        const title = pathParts.map(part => part.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(' - ');
+        setPageTitle(title);
+      } else {
+        setPageTitle("SEO Content Forge"); 
+      }
     }
-    else setPageTitle("SEO Content Forge"); 
   }, [pathname]);
 
 
@@ -73,4 +87,3 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
 // Required for the Link component
 import Link from 'next/link';
-

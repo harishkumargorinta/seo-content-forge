@@ -1,8 +1,13 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, BotMessageSquare, LayoutList, Settings2, PenSquare } from "lucide-react";
+import { ArrowRight, BotMessageSquare, Settings2, PenSquare, LayoutList, FileCode2, Wrench, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { allTools } from "@/lib/tool-definitions";
+
+const existingToolsForDashboard = allTools.filter(tool => tool.isExisting);
+const newToolsForDashboard = allTools.filter(tool => tool.isComingSoon);
 
 export default function DashboardPage() {
   return (
@@ -29,36 +34,47 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <FeatureCard
-          icon={<Settings2 className="h-8 w-8 text-primary" />}
-          title="SEO Optimizer"
-          description="Refine titles, meta descriptions, and keywords with our AI-powered analysis tool. Boost your organic reach effortlessly."
-          link="/seo-optimizer"
-          linkText="Optimize Now"
-        />
-         <FeatureCard
-          icon={<PenSquare className="h-8 w-8 text-primary" />}
-          title="Content Writer"
-          description="Generate high-quality articles and blog posts with AI assistance. Create unique, SEO-friendly content in minutes."
-          link="/content-writer"
-          linkText="Write Content"
-        />
-        <FeatureCard
-          icon={<LayoutList className="h-8 w-8 text-primary" />}
-          title="Comparison Builder"
-          description="Create engaging side-by-side comparisons of products or services. Attract high-intent traffic and provide value to your audience."
-          link="/comparison-builder"
-          linkText="Build Comparison"
-        />
-        <FeatureCard
-          icon={<BotMessageSquare className="h-8 w-8 text-primary" />}
-          title="Content Quality Focus"
-          description="Our platform prioritizes human-crafted articles, enhanced by AI, for better search rankings and AdSense approval."
-          link="#" // Placeholder link
-          linkText="Learn More"
-          isActionable={false}
-        />
+      <div>
+        <h2 className="text-2xl font-semibold tracking-tight mb-4">Core Tools</h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {existingToolsForDashboard.map(tool => (
+            <FeatureCard
+              key={tool.slug}
+              icon={<tool.icon className="h-8 w-8 text-primary" />}
+              title={tool.title}
+              description={tool.description}
+              link={tool.link}
+              linkText="Open Tool"
+            />
+          ))}
+          <FeatureCard
+            icon={<BotMessageSquare className="h-8 w-8 text-primary" />}
+            title="Content Quality Focus"
+            description="Our platform prioritizes human-crafted articles, enhanced by AI, for better search rankings and AdSense approval."
+            link="#" 
+            linkText="Learn More"
+            isActionable={false}
+          />
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-semibold tracking-tight mb-4 mt-8">Expanded Toolkit (Coming Soon)</h2>
+         <p className="mb-6 text-muted-foreground">
+            Explore our upcoming suite of specialized AI tools designed to cover every facet of your content and branding requirements. Click to see what's planned!
+          </p>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {newToolsForDashboard.map(tool => (
+            <FeatureCard
+              key={tool.slug}
+              icon={<tool.icon className="h-8 w-8 text-primary" />}
+              title={tool.title}
+              description={tool.description}
+              link={tool.link}
+              linkText="Learn More"
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
