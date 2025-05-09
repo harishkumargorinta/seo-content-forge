@@ -37,7 +37,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-screen bg-background">
         <Sidebar collapsible="icon" className="border-r">
           <SidebarHeader className="p-4">
-           <Link href="/dashboard" aria-label="Dashboard">
+           <Link href="/" aria-label="SEO Content Forge Home">
              <Logo />
            </Link>
           </SidebarHeader>
@@ -73,3 +73,4 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
 // Required for the Link component
 import Link from 'next/link';
+

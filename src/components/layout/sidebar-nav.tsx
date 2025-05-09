@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, LayoutList, ListChecks, Settings2, PenSquare, FileCode2, History } from 'lucide-react';
+import { Home, LayoutList, ListChecks, Settings2, PenSquare, FileCode2, History, Globe } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -12,6 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const navItems = [
+  { href: '/', label: 'Home', icon: Globe },
   { href: '/dashboard', label: 'Dashboard', icon: Home },
   { href: '/seo-optimizer', label: 'SEO Optimizer', icon: Settings2 },
   { href: '/content-writer', label: 'Content Writer', icon: PenSquare },
@@ -26,27 +27,37 @@ export function SidebarNav() {
 
   return (
     <SidebarMenu>
-      {navItems.map((item) => (
-        <SidebarMenuItem key={item.href}>
-          <Link href={item.href} passHref legacyBehavior>
-            <SidebarMenuButton
-              asChild
-              className={cn(
-                (pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href)))
-                  ? 'bg-sidebar-accent text-sidebar-accent-foreground' 
-                  : ''
-              )}
-              isActive={pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))}
-              tooltip={item.label}
-            >
-              <a>
-                <item.icon className="h-5 w-5" />
-                <span>{item.label}</span>
-              </a>
-            </SidebarMenuButton>
-          </Link>
-        </SidebarMenuItem>
-      ))}
+      {navItems.map((item) => {
+        let currentItemIsActive;
+        if (item.href === '/') {
+          currentItemIsActive = pathname === '/';
+        } else {
+          // Original logic for other items
+          currentItemIsActive = (pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href)));
+        }
+
+        return (
+          <SidebarMenuItem key={item.href}>
+            <Link href={item.href} passHref legacyBehavior>
+              <SidebarMenuButton
+                asChild
+                className={cn(
+                  currentItemIsActive
+                    ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                    : ''
+                )}
+                isActive={currentItemIsActive}
+                tooltip={item.label}
+              >
+                <a>
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.label}</span>
+                </a>
+              </SidebarMenuButton>
+            </Link>
+          </SidebarMenuItem>
+        );
+      })}
     </SidebarMenu>
   );
 }
