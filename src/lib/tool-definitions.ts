@@ -4,7 +4,7 @@ import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
   Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks,
-  Film, Youtube, Tags, Facebook, MessageSquarePlus, Hash, Brain, Zap, Users, Sparkles // Added Sparkles for benefits, ensured others are present
+  Film, Youtube, Tags, Facebook, MessageSquarePlus, Hash, Brain, Zap, Users, Sparkles, Feather // Added Feather for Comic Book
 } from 'lucide-react';
 
 export type ToolCategory = 'Content Creation' | 'SEO & Marketing' | 'Social Media' | 'Business & Branding' | 'Productivity';
@@ -118,6 +118,28 @@ export const allTools: ToolDefinition[] = [
     isComingSoon: false,
     category: 'Social Media',
   },
+   {
+    slug: 'book-chapter-writer',
+    title: 'Book Chapter Writer (Non-Fiction)',
+    description: 'AI assistance for drafting well-structured chapters for your non-fiction book projects.',
+    icon: BookText,
+    pageTitle: 'Book Chapter Writer',
+    link: '/book-chapter-writer',
+    isExisting: true,
+    isComingSoon: false,
+    category: 'Content Creation',
+  },
+  {
+    slug: 'comic-book-writer',
+    title: 'Kids Comic Book Writer',
+    description: 'Create fun comic book stories and scripts for children, with panel descriptions and dialogue.',
+    icon: Feather, // Using Feather for creative writing
+    pageTitle: 'Kids Comic Book Writer',
+    link: '/comic-book-writer',
+    isExisting: true,
+    isComingSoon: false,
+    category: 'Content Creation',
+  },
   // New Tools (Coming Soon)
   {
     slug: 'blog-workflow',
@@ -148,16 +170,6 @@ export const allTools: ToolDefinition[] = [
     link: '/copywriting-frameworks',
     isComingSoon: true,
     category: 'SEO & Marketing',
-  },
-  {
-    slug: 'book-chapter-writer',
-    title: 'Book Chapter Writer (Non-Fiction)',
-    description: 'AI assistance for drafting well-structured chapters for your non-fiction book projects.',
-    icon: BookText,
-    pageTitle: 'Book Chapter Writer',
-    link: '/book-chapter-writer',
-    isComingSoon: true,
-    category: 'Content Creation',
   },
   {
     slug: 'book-writing',

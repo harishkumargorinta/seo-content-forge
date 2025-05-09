@@ -2,12 +2,12 @@
 "use client";
 
 import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
-import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem, SeoBlogPackageHistoryItem, YouTubeTitleGeneratorHistoryItem, YouTubeDescriptionTagsHistoryItem, FacebookTitleGeneratorHistoryItem, FacebookDescriptionTagsHistoryItem } from '@/lib/history-types';
+import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem, SeoBlogPackageHistoryItem, YouTubeTitleGeneratorHistoryItem, YouTubeDescriptionTagsHistoryItem, FacebookTitleGeneratorHistoryItem, FacebookDescriptionTagsHistoryItem, BookChapterWriterHistoryItem, ComicBookWriterHistoryItem } from '@/lib/history-types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags as TagsIcon, PackageCheck, ListOrdered, Youtube, Lightbulb, Facebook, MessageSquarePlus, Hash, Info } from 'lucide-react';
+import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags as TagsIcon, PackageCheck, ListOrdered, Youtube, Lightbulb, Facebook, MessageSquarePlus, Hash, Info, BookText, Sparkles, MessageSquare } from 'lucide-react'; // Added BookText, Sparkles
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,6 +40,10 @@ function getIconForType(type: GeneratedHistoryItem['type']) {
       return <Facebook className="h-5 w-5 mr-2 text-blue-600" />;
     case 'FACEBOOK_DESCRIPTION_TAGS':
       return <MessageSquarePlus className="h-5 w-5 mr-2 text-blue-700" />;
+    case 'BOOK_CHAPTER_WRITER':
+      return <BookText className="h-5 w-5 mr-2 text-purple-600" />;
+    case 'COMIC_BOOK_WRITER':
+      return <Sparkles className="h-5 w-5 mr-2 text-yellow-500" />;
     default:
       return <FileText className="h-5 w-5 mr-2 text-primary" />;
   }
@@ -63,6 +67,10 @@ function getTypeName(type: GeneratedHistoryItem['type']) {
       return "Facebook Title Generation";
     case 'FACEBOOK_DESCRIPTION_TAGS':
       return "Facebook Description & Hashtags";
+    case 'BOOK_CHAPTER_WRITER':
+      return "Book Chapter Writer";
+    case 'COMIC_BOOK_WRITER':
+      return "Kids' Comic Book Writer";
     default:
       return "Generated Content";
   }
@@ -192,6 +200,7 @@ export function HistoryList() {
               </AccordionTrigger>
               <AccordionContent className="p-4 pt-0">
                 <div className="space-y-3 text-sm text-muted-foreground">
+                  {/* Existing types */}
                   {item.type === 'SEO_OPTIMIZATION' && (
                     <>
                       <p><strong>Focus Keyword:</strong> {(item as SeoHistoryItem).input.focusKeyword || 'N/A'}</p>
@@ -385,6 +394,48 @@ export function HistoryList() {
                       </div>
                       <Button size="sm" variant="outline" className="mt-2" onClick={() => handleCopyToClipboard(JSON.stringify((item as FacebookDescriptionTagsHistoryItem).output, null, 2), "Full Facebook Desc/Tags Output")}>
                         <Copy className="mr-2 h-3 w-3" /> Copy Full Output
+                      </Button>
+                    </>
+                  )}
+                  {/* New types */}
+                  {item.type === 'BOOK_CHAPTER_WRITER' && (
+                    <>
+                      <p><strong>Chapter Topic:</strong> {(item as BookChapterWriterHistoryItem).input.chapterTopic}</p>
+                      <p><strong>Overall Book Topic:</strong> {(item as BookChapterWriterHistoryItem).input.overallBookTopic}</p>
+                      <p><strong>Generated Chapter Title:</strong> {(item as BookChapterWriterHistoryItem).output.generatedChapterTitle}</p>
+                      {(item as BookChapterWriterHistoryItem).output.suggestedSubheadings && <p><strong>Suggested Subheadings:</strong> {(item as BookChapterWriterHistoryItem).output.suggestedSubheadings}</p>}
+                      <div className="max-h-60 overflow-y-auto p-2 border rounded-md bg-background">
+                        <h4 className="font-semibold text-foreground mb-1">Chapter Content (Markdown):</h4>
+                        <pre className="whitespace-pre-wrap text-xs">{(item as BookChapterWriterHistoryItem).output.chapterContent}</pre>
+                      </div>
+                      <Button size="sm" variant="outline" onClick={() => handleCopyToClipboard((item as BookChapterWriterHistoryItem).output.chapterContent, "Chapter Content")}>
+                        <Copy className="mr-2 h-3 w-3" /> Copy Chapter Content
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify((item as BookChapterWriterHistoryItem).output, null, 2), "Full Chapter Output")}>
+                        <Copy className="mr-2 h-3 w-3" /> Copy Full Output
+                      </Button>
+                    </>
+                  )}
+                  {item.type === 'COMIC_BOOK_WRITER' && (
+                    <>
+                      <p><strong>Story Theme:</strong> {(item as ComicBookWriterHistoryItem).input.storyTheme}</p>
+                      <p><strong>Comic Title:</strong> {(item as ComicBookWriterHistoryItem).output.comicTitle}</p>
+                      <p><strong>Character Summary:</strong> {(item as ComicBookWriterHistoryItem).output.characterSummary}</p>
+                      <p><strong>Story Summary:</strong> {(item as ComicBookWriterHistoryItem).output.storySummary}</p>
+                       <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1 flex items-center"><MessageSquare className="h-4 w-4 mr-1"/>Comic Panels:</h4>
+                        <div className="max-h-60 overflow-y-auto p-2 border rounded-md bg-background space-y-2">
+                          {(item as ComicBookWriterHistoryItem).output.panels.map((panel, idx) => (
+                            <div key={idx} className="p-2 border-b border-border/50 last:border-b-0 bg-card/50 rounded">
+                              <p className="font-medium text-foreground text-sm">Panel {panel.panelNumber}</p>
+                              <p className="text-xs mt-0.5"><strong className="text-muted-foreground">Scene:</strong> {panel.sceneDescription}</p>
+                              <p className="text-xs mt-0.5"><strong className="text-muted-foreground">Dialogue/Caption:</strong> {panel.dialogueOrCaption}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <Button size="sm" variant="outline" className="mt-2" onClick={() => handleCopyToClipboard(JSON.stringify((item as ComicBookWriterHistoryItem).output, null, 2), "Full Comic Script Output")}>
+                        <Copy className="mr-2 h-3 w-3" /> Copy Full Script
                       </Button>
                     </>
                   )}

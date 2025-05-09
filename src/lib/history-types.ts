@@ -6,7 +6,10 @@ import type { SeoBlogPackageInput, SeoBlogPackageOutput } from '@/ai/flows/seo-b
 import type { GenerateYouTubeTitlesInput, GenerateYouTubeTitlesOutput } from '@/ai/flows/youtube-title-generator-flow';
 import type { GenerateYouTubeDescriptionAndTagsInput, GenerateYouTubeDescriptionAndTagsOutput } from '@/ai/flows/youtube-description-tags-flow';
 import type { GenerateFacebookTitlesInput, GenerateFacebookTitlesOutput } from '@/ai/flows/facebook-title-generator-flow';
-import type { GenerateFacebookDescriptionTagsInput, GenerateFacebookDescriptionTagsOutput } from '@/ai/flows/facebook-description-tags-flow'; // Added
+import type { GenerateFacebookDescriptionTagsInput, GenerateFacebookDescriptionTagsOutput } from '@/ai/flows/facebook-description-tags-flow';
+import type { GenerateBookChapterInput, GenerateBookChapterOutput } from '@/ai/flows/book-chapter-writer-flow';
+import type { GenerateComicBookInput, GenerateComicBookOutput } from '@/ai/flows/comic-book-writer-flow';
+
 
 export type GeneratedContentType = 
   | 'SEO_OPTIMIZATION' 
@@ -16,7 +19,9 @@ export type GeneratedContentType =
   | 'YOUTUBE_TITLE_GENERATION'
   | 'YOUTUBE_DESCRIPTION_TAGS'
   | 'FACEBOOK_TITLE_GENERATION'
-  | 'FACEBOOK_DESCRIPTION_TAGS'; // Added new type
+  | 'FACEBOOK_DESCRIPTION_TAGS'
+  | 'BOOK_CHAPTER_WRITER'
+  | 'COMIC_BOOK_WRITER';
 
 export interface BaseHistoryItem {
   id: string; // Unique ID for the history item
@@ -67,10 +72,22 @@ export interface FacebookTitleGeneratorHistoryItem extends BaseHistoryItem {
   output: GenerateFacebookTitlesOutput;
 }
 
-export interface FacebookDescriptionTagsHistoryItem extends BaseHistoryItem { // Added
+export interface FacebookDescriptionTagsHistoryItem extends BaseHistoryItem {
   type: 'FACEBOOK_DESCRIPTION_TAGS';
   input: GenerateFacebookDescriptionTagsInput;
   output: GenerateFacebookDescriptionTagsOutput;
+}
+
+export interface BookChapterWriterHistoryItem extends BaseHistoryItem {
+  type: 'BOOK_CHAPTER_WRITER';
+  input: GenerateBookChapterInput;
+  output: GenerateBookChapterOutput;
+}
+
+export interface ComicBookWriterHistoryItem extends BaseHistoryItem {
+  type: 'COMIC_BOOK_WRITER';
+  input: GenerateComicBookInput;
+  output: GenerateComicBookOutput;
 }
 
 
@@ -82,7 +99,9 @@ export type GeneratedHistoryItem =
   | YouTubeTitleGeneratorHistoryItem
   | YouTubeDescriptionTagsHistoryItem
   | FacebookTitleGeneratorHistoryItem
-  | FacebookDescriptionTagsHistoryItem; // Added new type to union
+  | FacebookDescriptionTagsHistoryItem
+  | BookChapterWriterHistoryItem
+  | ComicBookWriterHistoryItem;
 
 // Utility type for adding history items, omitting the id and timestamp as they'll be generated
 export type NewSeoHistoryData = Omit<SeoHistoryItem, 'id' | 'timestamp'>;
@@ -92,7 +111,9 @@ export type NewSeoBlogPackageHistoryData = Omit<SeoBlogPackageHistoryItem, 'id' 
 export type NewYouTubeTitleGeneratorHistoryData = Omit<YouTubeTitleGeneratorHistoryItem, 'id' | 'timestamp'>; 
 export type NewYouTubeDescriptionTagsHistoryData = Omit<YouTubeDescriptionTagsHistoryItem, 'id' | 'timestamp'>;
 export type NewFacebookTitleGeneratorHistoryData = Omit<FacebookTitleGeneratorHistoryItem, 'id' | 'timestamp'>;
-export type NewFacebookDescriptionTagsHistoryData = Omit<FacebookDescriptionTagsHistoryItem, 'id' | 'timestamp'>; // Added
+export type NewFacebookDescriptionTagsHistoryData = Omit<FacebookDescriptionTagsHistoryItem, 'id' | 'timestamp'>;
+export type NewBookChapterWriterHistoryData = Omit<BookChapterWriterHistoryItem, 'id' | 'timestamp'>;
+export type NewComicBookWriterHistoryData = Omit<ComicBookWriterHistoryItem, 'id' | 'timestamp'>;
 
 
 export type NewGeneratedHistoryItemData = 
@@ -103,4 +124,6 @@ export type NewGeneratedHistoryItemData =
   | NewYouTubeTitleGeneratorHistoryData
   | NewYouTubeDescriptionTagsHistoryData
   | NewFacebookTitleGeneratorHistoryData
-  | NewFacebookDescriptionTagsHistoryData; // Added new type to union
+  | NewFacebookDescriptionTagsHistoryData
+  | NewBookChapterWriterHistoryData
+  | NewComicBookWriterHistoryData;
