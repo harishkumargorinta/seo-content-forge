@@ -21,13 +21,13 @@ export interface SeoHistoryItem extends BaseHistoryItem {
 export interface ContentWriterHistoryItem extends BaseHistoryItem {
   type: 'CONTENT_WRITING';
   input: GenerateContentInput;
-  output: GenerateContentOutput;
+  output: GenerateContentOutput; // Already includes title, metaDescription, suggestedKeywords, slug, contentBody, seoScore
 }
 
 export interface ContentImporterHistoryItem extends BaseHistoryItem {
   type: 'CONTENT_IMPORT_REWRITE';
   input: RewriteImportedContentInput;
-  output: RewriteImportedContentOutput;
+  output: RewriteImportedContentOutput; // Already includes rewrittenTitle, rewrittenMetaDescription, suggestedKeywords, rewrittenContentBody, seoScore
 }
 
 export type GeneratedHistoryItem = 
@@ -44,3 +44,5 @@ export type NewGeneratedHistoryItemData =
   | NewSeoHistoryData
   | NewContentWriterHistoryData
   | NewContentImporterHistoryData;
+
+    

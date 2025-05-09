@@ -13,7 +13,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { rewriteImportedContent, type RewriteImportedContentInput, type RewriteImportedContentOutput } from '@/ai/flows/rewrite-imported-content-flow';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Copy, Link2, AlertTriangle } from 'lucide-react';
+import { Loader2, Copy, Link2, AlertTriangle, BarChart, Tags } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
 import type { NewContentImporterHistoryData } from '@/lib/history-types';
@@ -198,6 +198,22 @@ export function ContentImporterForm() {
                     </div>
                     </div>
                     <div>
+                      <Label htmlFor="result-keywords" className="text-sm font-medium">Suggested Keywords</Label>
+                      <div className="flex items-center gap-2 mt-1">
+                          <Input id="result-keywords" value={rewriteResult.suggestedKeywords} readOnly className="bg-muted/50"/>
+                          <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(rewriteResult.suggestedKeywords, "Suggested Keywords")}>
+                          <Copy className="h-4 w-4" />
+                          </Button>
+                      </div>
+                    </div>
+                    <div>
+                        <Label htmlFor="result-seo-score" className="text-sm font-medium">SEO Score</Label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Input id="result-seo-score" value={rewriteResult.seoScore} readOnly className="bg-muted/50 font-semibold"/>
+                            <BarChart className="h-5 w-5 text-primary" />
+                        </div>
+                    </div>
+                    <div>
                     <Label htmlFor="result-content" className="text-sm font-medium">Rewritten Content (Markdown)</Label>
                     <div className="flex items-start gap-2 mt-1">
                         <Textarea id="result-content" value={rewriteResult.rewrittenContentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" />
@@ -211,7 +227,7 @@ export function ContentImporterForm() {
           </CardContent>
            {!rewriteResult.detectedError && (rewriteResult.rewrittenTitle || rewriteResult.rewrittenMetaDescription || rewriteResult.rewrittenContentBody) && (
             <CardFooter>
-                <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify({ title: rewriteResult.rewrittenTitle, metaDescription: rewriteResult.rewrittenMetaDescription, contentBody: rewriteResult.rewrittenContentBody }, null, 2), "All Rewritten Results as JSON")}>
+                <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify({ title: rewriteResult.rewrittenTitle, metaDescription: rewriteResult.rewrittenMetaDescription, suggestedKeywords: rewriteResult.suggestedKeywords, contentBody: rewriteResult.rewrittenContentBody, seoScore: rewriteResult.seoScore }, null, 2), "All Rewritten Results as JSON")}>
                     <Copy className="mr-2 h-4 w-4" /> Copy Rewritten Results as JSON
                 </Button>
             </CardFooter>
@@ -221,3 +237,5 @@ export function ContentImporterForm() {
     </div>
   );
 }
+
+    

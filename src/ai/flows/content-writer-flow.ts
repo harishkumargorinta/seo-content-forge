@@ -26,6 +26,7 @@ const GenerateContentOutputSchema = z.object({
   suggestedKeywords: z.string().describe('A list of relevant keywords, comma-separated.'),
   slug: z.string().describe('A URL-friendly slug for the content.'),
   contentBody: z.string().describe('The main content body in Markdown format.'),
+  seoScore: z.string().describe('An SEO score (e.g., "85/100" or "Good") assessing the overall SEO quality of the generated outputs, considering keyword integration, readability, structure, and uniqueness.'),
 });
 export type GenerateContentOutput = z.infer<typeof GenerateContentOutputSchema>;
 
@@ -38,6 +39,7 @@ const prompt = ai.definePrompt({
   input: {schema: GenerateContentInputSchema},
   output: {schema: GenerateContentOutputSchema},
   prompt: `You are an expert content writer and SEO specialist. Your task is to generate a compelling and informative {{contentType}} on the topic: "{{topic}}".
+Ensure all generated outputs are highly SEO-optimized to rank well in search engines.
 
 {{#if targetAudience}}
 The content should be tailored for the following target audience: {{targetAudience}}.
@@ -46,20 +48,21 @@ The content should be tailored for the following target audience: {{targetAudien
 The desired tone of the content is: {{desiredTone}}.
 {{/if}}
 {{#if focusKeywords}}
-Please ensure the content is optimized for the following focus keywords: {{focusKeywords}}. Integrate these keywords naturally throughout the text.
+Please ensure the content is optimized for the following focus keywords: {{focusKeywords}}. Integrate these keywords naturally throughout the text, including headings and body.
 {{/if}}
 {{#if approximateWordCount}}
-The desired length for the content is approximately {{approximateWordCount}} words. Strive for this length, but prioritize quality and completeness.
+The desired length for the content is approximately {{approximateWordCount}} words. Strive for this length, but prioritize quality, SEO, and completeness.
 {{/if}}
 
 Generate the following:
-1.  An SEO-optimized title. Aim for under 70 characters, but prioritize impact and keyword relevance.
+1.  An SEO-optimized title. Aim for under 70 characters, make it impactful and keyword-rich.
 2.  An SEO-optimized meta description. Aim for under 160 characters, make it compelling and include keywords.
-3.  A list of 5-10 relevant keywords, comma-separated. These should complement the focus keywords if provided.
+3.  A list of 5-10 relevant keywords, comma-separated. These should complement the focus keywords if provided and cover related search terms.
 4.  A URL-friendly slug for the content (e.g., "benefits-of-plant-based-diet").
-5.  The main content body in Markdown format. Structure the content with clear headings (e.g., '## Main Section', '### Subsection'), paragraphs, bullet points (using '*' or '-'), and numbered lists where appropriate. Ensure the content is unique, engaging, well-researched (if applicable to the topic), and provides significant value to the reader. Avoid plagiarism and generic statements. Aim for a high-quality piece that would rank well in search engine results.
+5.  The main content body in Markdown format. Structure the content with clear, keyword-inclusive headings (e.g., '## Main Section', '### Subsection'), paragraphs, bullet points (using '*' or '-'), and numbered lists where appropriate. Ensure the content is unique, engaging, well-researched (if applicable to the topic), and provides significant value to the reader. Avoid plagiarism and generic statements. Focus on readability and user experience.
+6.  An SEO score (e.g., "85/100" or "Good - 75/100") assessing the overall SEO quality of the generated title, meta description, suggested keywords, slug, and content body. The score should reflect keyword integration, readability, structure, uniqueness, and overall search engine ranking potential.
 
-Output the result as a single JSON object. The JSON object MUST have the following keys: "title" (string), "metaDescription" (string), "suggestedKeywords" (string), "slug" (string), and "contentBody" (string).
+Output the result as a single JSON object. The JSON object MUST have the following keys: "title" (string), "metaDescription" (string), "suggestedKeywords" (string), "slug" (string), "contentBody" (string), and "seoScore" (string).
 The "contentBody" value must be a single string containing the complete Markdown formatted article or blog post.`,
 });
 
@@ -74,3 +77,5 @@ const contentWriterFlow = ai.defineFlow(
     return output!;
   }
 );
+
+    

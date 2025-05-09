@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy } from 'lucide-react';
+import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -187,6 +187,8 @@ export function HistoryList() {
                     <>
                       <p><strong>Topic:</strong> {(item as ContentWriterHistoryItem).input.topic}</p>
                       <p><strong>Generated Title:</strong> {(item as ContentWriterHistoryItem).output.title}</p>
+                      <p><strong>Suggested Keywords:</strong> {(item as ContentWriterHistoryItem).output.suggestedKeywords}</p>
+                      <p><strong>SEO Score:</strong> {(item as ContentWriterHistoryItem).output.seoScore}</p>
                       <div className="max-h-60 overflow-y-auto p-2 border rounded-md bg-background">
                         <h4 className="font-semibold text-foreground mb-1">Content Body (Markdown):</h4>
                         <pre className="whitespace-pre-wrap text-xs">{(item as ContentWriterHistoryItem).output.contentBody}</pre>
@@ -203,6 +205,8 @@ export function HistoryList() {
                     <>
                       <p><strong>Original URL:</strong> <a href={(item as ContentImporterHistoryItem).input.articleUrl} target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">{(item as ContentImporterHistoryItem).input.articleUrl}</a></p>
                       <p><strong>Rewritten Title:</strong> {(item as ContentImporterHistoryItem).output.rewrittenTitle}</p>
+                      <p><strong>Suggested Keywords:</strong> {(item as ContentImporterHistoryItem).output.suggestedKeywords}</p>
+                      <p><strong>SEO Score:</strong> {(item as ContentImporterHistoryItem).output.seoScore}</p>
                        {(item as ContentImporterHistoryItem).output.detectedError && <p className="text-destructive"><strong>Error:</strong> {(item as ContentImporterHistoryItem).output.detectedError}</p>}
                       <div className="max-h-60 overflow-y-auto p-2 border rounded-md bg-background">
                         <h4 className="font-semibold text-foreground mb-1">Rewritten Content (Markdown):</h4>
@@ -225,3 +229,5 @@ export function HistoryList() {
     </div>
   );
 }
+
+    

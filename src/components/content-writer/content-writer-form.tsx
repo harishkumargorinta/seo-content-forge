@@ -14,7 +14,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { generateContent, type GenerateContentInput, type GenerateContentOutput } from '@/ai/flows/content-writer-flow';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Copy } from 'lucide-react';
+import { Loader2, Copy, BarChart } from 'lucide-react';
 import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
 import type { NewContentWriterHistoryData } from '@/lib/history-types';
 
@@ -291,6 +291,13 @@ export function ContentWriterForm() {
               </div>
             </div>
             <div>
+              <Label htmlFor="result-seo-score" className="text-sm font-medium">SEO Score</Label>
+              <div className="flex items-center gap-2 mt-1">
+                <Input id="result-seo-score" value={generatedContent.seoScore} readOnly className="bg-muted/50 font-semibold"/>
+                <BarChart className="h-5 w-5 text-primary" /> 
+              </div>
+            </div>
+            <div>
               <Label htmlFor="result-content" className="text-sm font-medium">Generated Content (Markdown)</Label>
                <div className="flex items-start gap-2 mt-1">
                 <Textarea id="result-content" value={generatedContent.contentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" />
@@ -310,3 +317,5 @@ export function ContentWriterForm() {
     </div>
   );
 }
+
+    
