@@ -3,12 +3,14 @@ import type { OptimizeContentSeoInput, OptimizeContentSeoOutput } from '@/ai/flo
 import type { GenerateContentInput, GenerateContentOutput } from '@/ai/flows/content-writer-flow';
 import type { RewriteImportedContentInput, RewriteImportedContentOutput } from '@/ai/flows/rewrite-imported-content-flow';
 import type { SeoBlogPackageInput, SeoBlogPackageOutput } from '@/ai/flows/seo-blog-package-flow';
+import type { GenerateYouTubeTitlesInput, GenerateYouTubeTitlesOutput } from '@/ai/flows/youtube-title-generator-flow'; // Added
 
 export type GeneratedContentType = 
   | 'SEO_OPTIMIZATION' 
   | 'CONTENT_WRITING' 
   | 'CONTENT_IMPORT_REWRITE'
-  | 'SEO_BLOG_PACKAGE'; // Added new type
+  | 'SEO_BLOG_PACKAGE'
+  | 'YOUTUBE_TITLE_GENERATION'; // Added new type
 
 export interface BaseHistoryItem {
   id: string; // Unique ID for the history item
@@ -41,20 +43,29 @@ export interface SeoBlogPackageHistoryItem extends BaseHistoryItem {
   output: SeoBlogPackageOutput;
 }
 
+export interface YouTubeTitleGeneratorHistoryItem extends BaseHistoryItem { // Added
+  type: 'YOUTUBE_TITLE_GENERATION';
+  input: GenerateYouTubeTitlesInput;
+  output: GenerateYouTubeTitlesOutput;
+}
+
 export type GeneratedHistoryItem = 
   | SeoHistoryItem 
   | ContentWriterHistoryItem 
   | ContentImporterHistoryItem
-  | SeoBlogPackageHistoryItem; // Added new type to union
+  | SeoBlogPackageHistoryItem
+  | YouTubeTitleGeneratorHistoryItem; // Added new type to union
 
 // Utility type for adding history items, omitting the id and timestamp as they'll be generated
 export type NewSeoHistoryData = Omit<SeoHistoryItem, 'id' | 'timestamp'>;
 export type NewContentWriterHistoryData = Omit<ContentWriterHistoryItem, 'id' | 'timestamp'>;
 export type NewContentImporterHistoryData = Omit<ContentImporterHistoryItem, 'id' | 'timestamp'>;
-export type NewSeoBlogPackageHistoryData = Omit<SeoBlogPackageHistoryItem, 'id' | 'timestamp'>; // Added new type
+export type NewSeoBlogPackageHistoryData = Omit<SeoBlogPackageHistoryItem, 'id' | 'timestamp'>;
+export type NewYouTubeTitleGeneratorHistoryData = Omit<YouTubeTitleGeneratorHistoryItem, 'id' | 'timestamp'>; // Added
 
 export type NewGeneratedHistoryItemData = 
   | NewSeoHistoryData
   | NewContentWriterHistoryData
   | NewContentImporterHistoryData
-  | NewSeoBlogPackageHistoryData; // Added new type to union
+  | NewSeoBlogPackageHistoryData
+  | NewYouTubeTitleGeneratorHistoryData; // Added new type to union

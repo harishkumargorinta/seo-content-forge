@@ -4,7 +4,7 @@ import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
   Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks,
-  Film // Added Film icon
+  Film, Youtube // Added Youtube icon for better specificity
 } from 'lucide-react';
 
 export interface ToolDefinition {
@@ -71,6 +71,17 @@ export const allTools: ToolDefinition[] = [
     isExisting: true,
     isComingSoon: false,
     category: 'Content Creation', 
+  },
+  {
+    slug: 'youtube-title-generator',
+    title: 'YouTube Title Generator',
+    description: 'Generate catchy, SEO-friendly titles for your YouTube videos with AI. Attract more viewers.',
+    icon: Youtube, 
+    pageTitle: 'YouTube Title Generator',
+    link: '/youtube-title-generator',
+    isExisting: true,
+    isComingSoon: false,
+    category: 'SEO & Marketing',
   },
   // New Tools (Coming Soon)
   {
@@ -180,16 +191,6 @@ export const allTools: ToolDefinition[] = [
     icon: PanelTopOpen,
     pageTitle: 'Homepage Copy Writer',
     link: '/homepage-copy-writer',
-    isComingSoon: true,
-    category: 'Content Creation',
-  },
-  {
-    slug: 'youtube-script-generator',
-    title: 'YouTube Script Generator',
-    description: 'Craft engaging scripts for your YouTube videos with AI, including hooks, structure, and calls to action.',
-    icon: Film, 
-    pageTitle: 'YouTube Script Generator',
-    link: '/youtube-script-generator',
     isComingSoon: true,
     category: 'Content Creation',
   },
