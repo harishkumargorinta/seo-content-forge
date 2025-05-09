@@ -5,8 +5,8 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'SEO Content Forge',
-  description: 'Human-Centric Autoblogging Platform for SEO Growth',
+  title: 'SEO Content Forge - AI-Powered Content & SEO Platform',
+  description: 'Supercharge your content creation and SEO strategy with AI. Generate articles, optimize for search engines, and build engaging comparisons.',
 };
 
 export default function RootLayout({

@@ -15,20 +15,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [pageTitle, setPageTitle] = React.useState("Dashboard"); 
 
   React.useEffect(() => {
-    if (pathname.includes("/seo-optimizer")) setPageTitle("SEO Optimizer");
-    else if (pathname.includes("/content-writer")) setPageTitle("Content Writer");
-    else if (pathname.includes("/content-importer")) setPageTitle("Content Importer");
-    else if (pathname.includes("/history")) setPageTitle("Content History");
-    else if (pathname.includes("/comparison-builder")) setPageTitle("Comparison Builder");
-    else if (pathname.includes("/comparisons")) {
+    if (pathname === "/dashboard") setPageTitle("Dashboard");
+    else if (pathname.startsWith("/seo-optimizer")) setPageTitle("SEO Optimizer");
+    else if (pathname.startsWith("/content-writer")) setPageTitle("Content Writer");
+    else if (pathname.startsWith("/content-importer")) setPageTitle("Content Importer");
+    else if (pathname.startsWith("/history")) setPageTitle("Content History");
+    else if (pathname.startsWith("/comparison-builder")) setPageTitle("Comparison Builder");
+    else if (pathname.startsWith("/comparisons")) {
         if (pathname.match(/^\/comparisons\/[^/]+$/)) { // Matches /comparisons/[id]
             setPageTitle("View Comparison Details");
         } else {
             setPageTitle("View Comparisons");
         }
     }
-    else if (pathname === "/") setPageTitle("Dashboard");
-    else setPageTitle("SEO Content Forge"); // Default for other sub-pages if any
+    else setPageTitle("SEO Content Forge"); 
   }, [pathname]);
 
 
@@ -37,7 +37,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-screen bg-background">
         <Sidebar collapsible="icon" className="border-r">
           <SidebarHeader className="p-4">
-            <Logo />
+           <Link href="/dashboard" aria-label="Dashboard">
+             <Logo />
+           </Link>
           </SidebarHeader>
           <SidebarContent className="flex-1 p-2">
             <SidebarNav />
@@ -68,3 +70,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     </SidebarProvider>
   );
 }
+
+// Required for the Link component
+import Link from 'next/link';

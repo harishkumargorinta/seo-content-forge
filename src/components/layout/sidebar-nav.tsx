@@ -12,7 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { href: '/', label: 'Dashboard', icon: Home },
+  { href: '/dashboard', label: 'Dashboard', icon: Home },
   { href: '/seo-optimizer', label: 'SEO Optimizer', icon: Settings2 },
   { href: '/content-writer', label: 'Content Writer', icon: PenSquare },
   { href: '/content-importer', label: 'Content Importer', icon: FileCode2 },
@@ -32,11 +32,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               className={cn(
-                pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href)) 
+                (pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href)))
                   ? 'bg-sidebar-accent text-sidebar-accent-foreground' 
                   : ''
               )}
-              isActive={pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))}
+              isActive={pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))}
               tooltip={item.label}
             >
               <a>
