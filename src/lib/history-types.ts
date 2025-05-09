@@ -4,13 +4,15 @@ import type { GenerateContentInput, GenerateContentOutput } from '@/ai/flows/con
 import type { RewriteImportedContentInput, RewriteImportedContentOutput } from '@/ai/flows/rewrite-imported-content-flow';
 import type { SeoBlogPackageInput, SeoBlogPackageOutput } from '@/ai/flows/seo-blog-package-flow';
 import type { GenerateYouTubeTitlesInput, GenerateYouTubeTitlesOutput } from '@/ai/flows/youtube-title-generator-flow'; // Added
+import type { GenerateYouTubeDescriptionAndTagsInput, GenerateYouTubeDescriptionAndTagsOutput } from '@/ai/flows/youtube-description-tags-flow'; // Added
 
 export type GeneratedContentType = 
   | 'SEO_OPTIMIZATION' 
   | 'CONTENT_WRITING' 
   | 'CONTENT_IMPORT_REWRITE'
   | 'SEO_BLOG_PACKAGE'
-  | 'YOUTUBE_TITLE_GENERATION'; // Added new type
+  | 'YOUTUBE_TITLE_GENERATION'
+  | 'YOUTUBE_DESCRIPTION_TAGS'; // Added new type
 
 export interface BaseHistoryItem {
   id: string; // Unique ID for the history item
@@ -43,29 +45,40 @@ export interface SeoBlogPackageHistoryItem extends BaseHistoryItem {
   output: SeoBlogPackageOutput;
 }
 
-export interface YouTubeTitleGeneratorHistoryItem extends BaseHistoryItem { // Added
+export interface YouTubeTitleGeneratorHistoryItem extends BaseHistoryItem { 
   type: 'YOUTUBE_TITLE_GENERATION';
   input: GenerateYouTubeTitlesInput;
   output: GenerateYouTubeTitlesOutput;
 }
+
+export interface YouTubeDescriptionTagsHistoryItem extends BaseHistoryItem { // Added
+  type: 'YOUTUBE_DESCRIPTION_TAGS';
+  input: GenerateYouTubeDescriptionAndTagsInput;
+  output: GenerateYouTubeDescriptionAndTagsOutput;
+}
+
 
 export type GeneratedHistoryItem = 
   | SeoHistoryItem 
   | ContentWriterHistoryItem 
   | ContentImporterHistoryItem
   | SeoBlogPackageHistoryItem
-  | YouTubeTitleGeneratorHistoryItem; // Added new type to union
+  | YouTubeTitleGeneratorHistoryItem
+  | YouTubeDescriptionTagsHistoryItem; // Added new type to union
 
 // Utility type for adding history items, omitting the id and timestamp as they'll be generated
 export type NewSeoHistoryData = Omit<SeoHistoryItem, 'id' | 'timestamp'>;
 export type NewContentWriterHistoryData = Omit<ContentWriterHistoryItem, 'id' | 'timestamp'>;
 export type NewContentImporterHistoryData = Omit<ContentImporterHistoryItem, 'id' | 'timestamp'>;
 export type NewSeoBlogPackageHistoryData = Omit<SeoBlogPackageHistoryItem, 'id' | 'timestamp'>;
-export type NewYouTubeTitleGeneratorHistoryData = Omit<YouTubeTitleGeneratorHistoryItem, 'id' | 'timestamp'>; // Added
+export type NewYouTubeTitleGeneratorHistoryData = Omit<YouTubeTitleGeneratorHistoryItem, 'id' | 'timestamp'>; 
+export type NewYouTubeDescriptionTagsHistoryData = Omit<YouTubeDescriptionTagsHistoryItem, 'id' | 'timestamp'>; // Added
+
 
 export type NewGeneratedHistoryItemData = 
   | NewSeoHistoryData
   | NewContentWriterHistoryData
   | NewContentImporterHistoryData
   | NewSeoBlogPackageHistoryData
-  | NewYouTubeTitleGeneratorHistoryData; // Added new type to union
+  | NewYouTubeTitleGeneratorHistoryData
+  | NewYouTubeDescriptionTagsHistoryData; // Added new type to union

@@ -4,7 +4,7 @@ import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
   Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks,
-  Film, Youtube // Added Youtube icon for better specificity
+  Film, Youtube, Tags // Added Tags icon
 } from 'lucide-react';
 
 export interface ToolDefinition {
@@ -79,6 +79,17 @@ export const allTools: ToolDefinition[] = [
     icon: Youtube, 
     pageTitle: 'YouTube Title Generator',
     link: '/youtube-title-generator',
+    isExisting: true,
+    isComingSoon: false,
+    category: 'SEO & Marketing',
+  },
+  {
+    slug: 'youtube-description-tags',
+    title: 'YouTube Description & Tags',
+    description: 'Generate SEO-optimized descriptions and relevant tags for YouTube videos based on script or title.',
+    icon: Tags,
+    pageTitle: 'YouTube Description & Tags Generator',
+    link: '/youtube-description-tags',
     isExisting: true,
     isComingSoon: false,
     category: 'SEO & Marketing',

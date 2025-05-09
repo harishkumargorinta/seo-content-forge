@@ -7,8 +7,11 @@ import Image from "next/image";
 import { Logo } from "@/components/icons/logo";
 import { allTools } from "@/lib/tool-definitions";
 
-const existingToolsForLanding = allTools.filter(tool => tool.isExisting).slice(0, 3); // Show a few existing key tools
+// Show a few existing key tools, prioritizing those that are not "coming soon"
+const existingToolsForLanding = allTools.filter(tool => tool.isExisting && !tool.isComingSoon).slice(0, 3);
 const newToolsForLanding = allTools.filter(tool => tool.isComingSoon);
+// Ensure all non-coming soon tools are available for the "Explore Our Expanding Toolkit" section if not in the top 3
+const allAvailableToolsForToolkitSection = allTools.filter(tool => tool.isExisting && !tool.isComingSoon);
 
 
 export default function LandingPage() {
@@ -103,11 +106,19 @@ export default function LandingPage() {
               Discover specialized AI tools to tackle every aspect of your content and branding needs. Many more coming soon!
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {allAvailableToolsForToolkitSection.map(tool => (
+                <FeatureHighlight
+                  key={tool.slug}
+                  icon={<tool.icon className="h-10 w-10 text-primary" />}
+                  title={tool.title}
+                  description={tool.description}
+                />
+              ))}
               {newToolsForLanding.map(tool => (
                 <FeatureHighlight
                   key={tool.slug}
                   icon={<tool.icon className="h-10 w-10 text-primary" />}
-                  title={tool.title + (tool.isComingSoon ? " (Coming Soon)" : "")}
+                  title={tool.title + " (Coming Soon)"}
                   description={tool.description}
                 />
               ))}

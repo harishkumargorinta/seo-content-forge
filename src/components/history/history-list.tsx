@@ -2,12 +2,12 @@
 "use client";
 
 import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
-import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem, SeoBlogPackageHistoryItem, YouTubeTitleGeneratorHistoryItem } from '@/lib/history-types';
+import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem, SeoBlogPackageHistoryItem, YouTubeTitleGeneratorHistoryItem, YouTubeDescriptionTagsHistoryItem } from '@/lib/history-types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags, PackageCheck, ListOrdered, Youtube, Lightbulb } from 'lucide-react';
+import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags as TagsIcon, PackageCheck, ListOrdered, Youtube, Lightbulb } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,6 +34,8 @@ function getIconForType(type: GeneratedHistoryItem['type']) {
       return <PackageCheck className="h-5 w-5 mr-2 text-primary" />;
     case 'YOUTUBE_TITLE_GENERATION':
       return <Youtube className="h-5 w-5 mr-2 text-red-500" />;
+    case 'YOUTUBE_DESCRIPTION_TAGS':
+      return <TagsIcon className="h-5 w-5 mr-2 text-red-600" />;
     default:
       return <FileText className="h-5 w-5 mr-2 text-primary" />;
   }
@@ -51,6 +53,8 @@ function getTypeName(type: GeneratedHistoryItem['type']) {
       return "SEO Blog Package";
     case 'YOUTUBE_TITLE_GENERATION':
       return "YouTube Title Generation";
+    case 'YOUTUBE_DESCRIPTION_TAGS':
+      return "YouTube Description & Tags";
     default:
       return "Generated Content";
   }
@@ -284,6 +288,31 @@ export function HistoryList() {
                         </Button>
                       </div>
                       <Button size="sm" variant="outline" className="mt-2" onClick={() => handleCopyToClipboard(JSON.stringify((item as YouTubeTitleGeneratorHistoryItem).output, null, 2), "Full Titles Output")}>
+                        <Copy className="mr-2 h-3 w-3" /> Copy Full Output
+                      </Button>
+                    </>
+                  )}
+                  {item.type === 'YOUTUBE_DESCRIPTION_TAGS' && (
+                    <>
+                      <p><strong>Video Content Snippet:</strong> {(item as YouTubeDescriptionTagsHistoryItem).input.videoContent.substring(0, 100)}...</p>
+                      {(item as YouTubeDescriptionTagsHistoryItem).input.focusKeywords && <p><strong>Focus Keywords:</strong> {(item as YouTubeDescriptionTagsHistoryItem).input.focusKeywords}</p>}
+                      <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1">Generated Description:</h4>
+                        <div className="max-h-60 overflow-y-auto p-2 border rounded-md bg-background">
+                          <pre className="whitespace-pre-wrap text-xs">{(item as YouTubeDescriptionTagsHistoryItem).output.videoDescription}</pre>
+                        </div>
+                         <Button size="xs" variant="outline" className="mt-1" onClick={() => handleCopyToClipboard((item as YouTubeDescriptionTagsHistoryItem).output.videoDescription, "Video Description")}>
+                          <Copy className="mr-1 h-3 w-3" /> Copy Description
+                        </Button>
+                      </div>
+                       <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1">Generated Tags:</h4>
+                         <p className="p-2 border rounded-md bg-background text-xs">{(item as YouTubeDescriptionTagsHistoryItem).output.videoTags}</p>
+                        <Button size="xs" variant="outline" className="mt-1" onClick={() => handleCopyToClipboard((item as YouTubeDescriptionTagsHistoryItem).output.videoTags, "Video Tags")}>
+                          <Copy className="mr-1 h-3 w-3" /> Copy Tags
+                        </Button>
+                      </div>
+                      <Button size="sm" variant="outline" className="mt-2" onClick={() => handleCopyToClipboard(JSON.stringify((item as YouTubeDescriptionTagsHistoryItem).output, null, 2), "Full Description & Tags Output")}>
                         <Copy className="mr-2 h-3 w-3" /> Copy Full Output
                       </Button>
                     </>
