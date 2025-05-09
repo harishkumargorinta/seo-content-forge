@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BotMessageSquare, Home, LayoutList, ListChecks, Settings2 } from 'lucide-react';
+import { BotMessageSquare, Home, LayoutList, ListChecks, Settings2, PenSquare } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { href: '/', label: 'Dashboard', icon: Home },
   { href: '/seo-optimizer', label: 'SEO Optimizer', icon: Settings2 },
+  { href: '/content-writer', label: 'Content Writer', icon: PenSquare },
   { href: '/comparison-builder', label: 'Comparison Builder', icon: LayoutList },
   { href: '/comparisons', label: 'View Comparisons', icon: ListChecks },
 ];

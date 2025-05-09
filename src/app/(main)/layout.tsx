@@ -6,22 +6,21 @@ import { SidebarNav } from '@/components/layout/sidebar-nav';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  // Placeholder for page title - in a real app, this would come from page metadata or context
+  const pathname = usePathname();
   const [pageTitle, setPageTitle] = React.useState("Dashboard"); 
 
-  // This effect is a simple way to update title based on path.
-  // A more robust solution might involve a context or a Head component in each page.
   React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const path = window.location.pathname;
-      if (path.includes("/seo-optimizer")) setPageTitle("SEO Optimizer");
-      else if (path.includes("/comparison-builder")) setPageTitle("Comparison Builder");
-      else if (path.includes("/comparisons")) setPageTitle("View Comparisons");
-      else setPageTitle("Dashboard");
-    }
-  }, []);
+    if (pathname.includes("/seo-optimizer")) setPageTitle("SEO Optimizer");
+    else if (pathname.includes("/content-writer")) setPageTitle("Content Writer");
+    else if (pathname.includes("/comparison-builder")) setPageTitle("Comparison Builder");
+    else if (pathname.includes("/comparisons")) setPageTitle("View Comparisons");
+    else if (pathname === "/") setPageTitle("Dashboard");
+    else setPageTitle("SEO Content Forge"); // Default for other sub-pages if any
+  }, [pathname]);
 
 
   return (

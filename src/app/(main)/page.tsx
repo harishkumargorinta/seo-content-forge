@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, BotMessageSquare, LayoutList, Settings2 } from "lucide-react";
+import { ArrowRight, BotMessageSquare, LayoutList, Settings2, PenSquare } from "lucide-react";
 import Image from "next/image";
 
 export default function DashboardPage() {
@@ -36,6 +36,13 @@ export default function DashboardPage() {
           description="Refine titles, meta descriptions, and keywords with our AI-powered analysis tool. Boost your organic reach effortlessly."
           link="/seo-optimizer"
           linkText="Optimize Now"
+        />
+         <FeatureCard
+          icon={<PenSquare className="h-8 w-8 text-primary" />}
+          title="Content Writer"
+          description="Generate high-quality articles and blog posts with AI assistance. Create unique, SEO-friendly content in minutes."
+          link="/content-writer"
+          linkText="Write Content"
         />
         <FeatureCard
           icon={<LayoutList className="h-8 w-8 text-primary" />}
