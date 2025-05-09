@@ -33,13 +33,13 @@ export default function LandingPage() {
         <section className="py-16 md:py-24 bg-gradient-to-br from-background via-secondary/10 to-background text-center">
           <div className="container mx-auto px-4">
              <Badge variant="secondary" className="mb-4 text-sm py-1 px-3 rounded-full">
-              ✨ New Tools Added Weekly!
+              # AI Content Generation
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
-              Create SEO-Optimized Content That Ranks, <span className="text-primary">Faster Than Ever</span>
+              Create Better Content <br className="hidden md:block" /> in <span className="text-primary">Less Time</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto">
-              Leverage the power of AI with SEO Content Forge to generate high-quality articles, social media posts, marketing copy, and more. Streamline your workflow and boost your online presence.
+              SEO Content Forge helps you create amazing, original content designed to rank high on search engines. Get started for free and boost your online presence.
             </p>
             <Button size="lg" asChild className="shadow-lg hover:shadow-xl transition-shadow duration-300 group">
               <Link href="/dashboard">
