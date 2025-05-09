@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -12,7 +13,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { optimizeContentSeo, type OptimizeContentSeoInput, type OptimizeContentSeoOutput } from '@/ai/flows/seo-optimize-content';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Copy } from 'lucide-react';
+import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
+import type { NewSeoHistoryData } from '@/lib/history-types';
 
 const formSchema = z.object({
   content: z.string().min(50, { message: "Content must be at least 50 characters." }).max(5000, { message: "Content must not exceed 5000 characters." }),
@@ -25,6 +28,7 @@ export function SeoOptimizerForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [seoResult, setSeoResult] = useState<OptimizeContentSeoOutput | null>(null);
   const { toast } = useToast();
+  const { addHistoryItem } = useGeneratedContentHistory();
 
   const form = useForm<SeoFormValues>({
     resolver: zodResolver(formSchema),
@@ -40,9 +44,18 @@ export function SeoOptimizerForm() {
     try {
       const result = await optimizeContentSeo(data as OptimizeContentSeoInput);
       setSeoResult(result);
+      
+      const historyEntry: NewSeoHistoryData = {
+        type: 'SEO_OPTIMIZATION',
+        primaryIdentifier: data.focusKeyword || `Content starting: "${data.content.substring(0, 30)}..."`,
+        input: { content: data.content, focusKeyword: data.focusKeyword }, // Storing full input here, can be changed to snippet
+        output: result,
+      };
+      addHistoryItem(historyEntry);
+
       toast({
         title: "SEO Optimization Complete",
-        description: "Your content has been analyzed and suggestions are ready.",
+        description: "Your content has been analyzed and suggestions are ready. Saved to history.",
       });
     } catch (error) {
       console.error("Error optimizing SEO:", error);
@@ -55,6 +68,16 @@ export function SeoOptimizerForm() {
       setIsLoading(false);
     }
   };
+
+  const handleCopyToClipboard = (text: string, fieldName: string) => {
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Copied to Clipboard",
+      description: `${fieldName} has been copied.`,
+    });
+  };
+
 
   return (
     <div className="space-y-6">
@@ -131,20 +154,35 @@ export function SeoOptimizerForm() {
           <CardContent className="space-y-4">
             <div>
               <Label htmlFor="result-title" className="text-sm font-medium">Optimized Title</Label>
-              <Input id="result-title" value={seoResult.title} readOnly className="mt-1 bg-muted/50"/>
+              <div className="flex items-center gap-2 mt-1">
+                <Input id="result-title" value={seoResult.title} readOnly className="bg-muted/50"/>
+                <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(seoResult.title, "Optimized Title")}>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             <div>
               <Label htmlFor="result-meta" className="text-sm font-medium">Meta Description</Label>
-              <Textarea id="result-meta" value={seoResult.metaDescription} readOnly className="mt-1 bg-muted/50 min-h-[80px]" />
+              <div className="flex items-center gap-2 mt-1">
+                <Textarea id="result-meta" value={seoResult.metaDescription} readOnly className="mt-1 bg-muted/50 min-h-[80px]" />
+                 <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(seoResult.metaDescription, "Meta Description")}>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             <div>
               <Label htmlFor="result-keywords" className="text-sm font-medium">Suggested Keywords</Label>
-              <Input id="result-keywords" value={seoResult.keywords} readOnly className="mt-1 bg-muted/50"/>
+              <div className="flex items-center gap-2 mt-1">
+                <Input id="result-keywords" value={seoResult.keywords} readOnly className="mt-1 bg-muted/50"/>
+                 <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(seoResult.keywords, "Suggested Keywords")}>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </CardContent>
           <CardFooter>
-             <Button variant="outline" onClick={() => navigator.clipboard.writeText(JSON.stringify(seoResult, null, 2))}>
-                Copy Results as JSON
+             <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify(seoResult, null, 2), "All Results as JSON")}>
+                <Copy className="mr-2 h-4 w-4" /> Copy Results as JSON
               </Button>
           </CardFooter>
         </Card>

@@ -15,6 +15,8 @@ import { rewriteImportedContent, type RewriteImportedContentInput, type RewriteI
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Copy, Link2, AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
+import type { NewContentImporterHistoryData } from '@/lib/history-types';
 
 
 const formSchema = z.object({
@@ -28,6 +30,7 @@ export function ContentImporterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [rewriteResult, setRewriteResult] = useState<RewriteImportedContentOutput | null>(null);
   const { toast } = useToast();
+  const { addHistoryItem } = useGeneratedContentHistory();
 
   const form = useForm<ContentImporterFormValues>({
     resolver: zodResolver(formSchema),
@@ -43,6 +46,7 @@ export function ContentImporterForm() {
     try {
       const result = await rewriteImportedContent(data);
       setRewriteResult(result);
+
       if (result.detectedError) {
         toast({
           title: "Error during processing",
@@ -50,9 +54,16 @@ export function ContentImporterForm() {
           variant: "destructive",
         });
       } else {
+        const historyEntry: NewContentImporterHistoryData = {
+          type: 'CONTENT_IMPORT_REWRITE',
+          primaryIdentifier: result.rewrittenTitle || data.articleUrl,
+          input: data,
+          output: result,
+        };
+        addHistoryItem(historyEntry);
         toast({
           title: "Content Rewriting Complete",
-          description: "The content has been fetched and rewritten.",
+          description: "The content has been fetched, rewritten, and saved to history.",
         });
       }
     } catch (error) {

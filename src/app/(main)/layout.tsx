@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from 'react';
@@ -17,6 +18,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (pathname.includes("/seo-optimizer")) setPageTitle("SEO Optimizer");
     else if (pathname.includes("/content-writer")) setPageTitle("Content Writer");
     else if (pathname.includes("/content-importer")) setPageTitle("Content Importer");
+    else if (pathname.includes("/history")) setPageTitle("Content History");
     else if (pathname.includes("/comparison-builder")) setPageTitle("Comparison Builder");
     else if (pathname.includes("/comparisons")) {
         if (pathname.match(/^\/comparisons\/[^/]+$/)) { // Matches /comparisons/[id]

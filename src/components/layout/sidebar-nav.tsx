@@ -1,8 +1,9 @@
+
 "use client";
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, LayoutList, ListChecks, Settings2, PenSquare, FileCode2 } from 'lucide-react';
+import { Home, LayoutList, ListChecks, Settings2, PenSquare, FileCode2, History } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -17,6 +18,7 @@ const navItems = [
   { href: '/content-importer', label: 'Content Importer', icon: FileCode2 },
   { href: '/comparison-builder', label: 'Comparison Builder', icon: LayoutList },
   { href: '/comparisons', label: 'View Comparisons', icon: ListChecks },
+  { href: '/history', label: 'Content History', icon: History },
 ];
 
 export function SidebarNav() {

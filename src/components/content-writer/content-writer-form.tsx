@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -14,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { generateContent, type GenerateContentInput, type GenerateContentOutput } from '@/ai/flows/content-writer-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Copy } from 'lucide-react';
+import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
+import type { NewContentWriterHistoryData } from '@/lib/history-types';
 
 const contentTypes = ["article", "blog post"] as const;
 const desiredTones = ["Informative", "Persuasive", "Casual", "Formal", "Humorous", "Professional", "Encouraging"] as const;
@@ -35,6 +38,7 @@ export function ContentWriterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [generatedContent, setGeneratedContent] = useState<GenerateContentOutput | null>(null);
   const { toast } = useToast();
+  const { addHistoryItem } = useGeneratedContentHistory();
 
   const form = useForm<ContentWriterFormValues>({
     resolver: zodResolver(formSchema),
@@ -52,9 +56,18 @@ export function ContentWriterForm() {
     try {
       const result = await generateContent(data as GenerateContentInput);
       setGeneratedContent(result);
+
+      const historyEntry: NewContentWriterHistoryData = {
+        type: 'CONTENT_WRITING',
+        primaryIdentifier: result.title || data.topic,
+        input: data as GenerateContentInput,
+        output: result,
+      };
+      addHistoryItem(historyEntry);
+
       toast({
         title: "Content Generation Complete",
-        description: "Your content has been generated and suggestions are ready.",
+        description: "Your content has been generated and suggestions are ready. Saved to history.",
       });
     } catch (error) {
       console.error("Error generating content:", error);
