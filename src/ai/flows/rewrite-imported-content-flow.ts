@@ -13,13 +13,13 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import {fetchWebContentTool} from '@/ai/tools/fetch-web-content-tool';
 
-export const RewriteImportedContentInputSchema = z.object({
+const RewriteImportedContentInputSchema = z.object({
   articleUrl: z.string().url().describe("The URL of the article to fetch and rewrite."),
   customInstructions: z.string().optional().describe("Optional custom instructions for the rewriting process, e.g., desired tone, specific keywords to include/exclude, target audience."),
 });
 export type RewriteImportedContentInput = z.infer<typeof RewriteImportedContentInputSchema>;
 
-export const RewriteImportedContentOutputSchema = z.object({
+const RewriteImportedContentOutputSchema = z.object({
   originalUrl: z.string().url(),
   rewrittenTitle: z.string().describe('A new, SEO-optimized title for the rewritten content.'),
   rewrittenMetaDescription: z.string().describe('A new, SEO-optimized meta description for the rewritten content.'),
@@ -108,3 +108,4 @@ const rewriteImportedContentFlow = ai.defineFlow(
     };
   }
 );
+
