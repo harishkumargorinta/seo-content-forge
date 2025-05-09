@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BotMessageSquare, Home, LayoutList, ListChecks, Settings2, PenSquare } from 'lucide-react';
+import { Home, LayoutList, ListChecks, Settings2, PenSquare, FileCode2 } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -14,6 +14,7 @@ const navItems = [
   { href: '/', label: 'Dashboard', icon: Home },
   { href: '/seo-optimizer', label: 'SEO Optimizer', icon: Settings2 },
   { href: '/content-writer', label: 'Content Writer', icon: PenSquare },
+  { href: '/content-importer', label: 'Content Importer', icon: FileCode2 },
   { href: '/comparison-builder', label: 'Comparison Builder', icon: LayoutList },
   { href: '/comparisons', label: 'View Comparisons', icon: ListChecks },
 ];
@@ -29,9 +30,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               className={cn(
-                pathname === item.href ? 'bg-sidebar-accent text-sidebar-accent-foreground' : ''
+                pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href)) 
+                  ? 'bg-sidebar-accent text-sidebar-accent-foreground' 
+                  : ''
               )}
-              isActive={pathname === item.href}
+              isActive={pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))}
               tooltip={item.label}
             >
               <a>

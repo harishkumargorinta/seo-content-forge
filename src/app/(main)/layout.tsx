@@ -16,8 +16,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     if (pathname.includes("/seo-optimizer")) setPageTitle("SEO Optimizer");
     else if (pathname.includes("/content-writer")) setPageTitle("Content Writer");
+    else if (pathname.includes("/content-importer")) setPageTitle("Content Importer");
     else if (pathname.includes("/comparison-builder")) setPageTitle("Comparison Builder");
-    else if (pathname.includes("/comparisons")) setPageTitle("View Comparisons");
+    else if (pathname.includes("/comparisons")) {
+        if (pathname.match(/^\/comparisons\/[^/]+$/)) { // Matches /comparisons/[id]
+            setPageTitle("View Comparison Details");
+        } else {
+            setPageTitle("View Comparisons");
+        }
+    }
     else if (pathname === "/") setPageTitle("Dashboard");
     else setPageTitle("SEO Content Forge"); // Default for other sub-pages if any
   }, [pathname]);
