@@ -102,6 +102,7 @@ export function SeoOptimizerForm() {
                         id="content"
                         placeholder="Paste your article content here..."
                         className="min-h-[200px] resize-y"
+                        suppressHydrationWarning // Added to potentially problematic Textarea
                         {...field}
                       />
                     </FormControl>
@@ -119,7 +120,12 @@ export function SeoOptimizerForm() {
                   <FormItem>
                     <FormLabel htmlFor="focusKeyword">Focus Keyword (Optional)</FormLabel>
                     <FormControl>
-                      <Input id="focusKeyword" placeholder="e.g., 'best coffee makers'" {...field} />
+                      <Input 
+                        id="focusKeyword" 
+                        placeholder="e.g., 'best coffee makers'" 
+                        suppressHydrationWarning 
+                        {...field} 
+                      />
                     </FormControl>
                     <FormDescription>
                       The primary keyword you want to target.
@@ -130,7 +136,12 @@ export function SeoOptimizerForm() {
               />
             </CardContent>
             <CardFooter>
-              <Button type="submit" disabled={isLoading} className="w-full md:w-auto">
+              <Button 
+                type="submit" 
+                disabled={isLoading} 
+                className="w-full md:w-auto"
+                suppressHydrationWarning
+              >
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -155,7 +166,7 @@ export function SeoOptimizerForm() {
             <div>
               <Label htmlFor="result-title" className="text-sm font-medium">Optimized Title</Label>
               <div className="flex items-center gap-2 mt-1">
-                <Input id="result-title" value={seoResult.title} readOnly className="bg-muted/50"/>
+                <Input id="result-title" value={seoResult.title} readOnly className="bg-muted/50" suppressHydrationWarning/>
                 <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(seoResult.title, "Optimized Title")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -164,7 +175,7 @@ export function SeoOptimizerForm() {
             <div>
               <Label htmlFor="result-meta" className="text-sm font-medium">Meta Description</Label>
               <div className="flex items-center gap-2 mt-1">
-                <Textarea id="result-meta" value={seoResult.metaDescription} readOnly className="mt-1 bg-muted/50 min-h-[80px]" />
+                <Textarea id="result-meta" value={seoResult.metaDescription} readOnly className="mt-1 bg-muted/50 min-h-[80px]" suppressHydrationWarning/>
                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(seoResult.metaDescription, "Meta Description")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -173,7 +184,7 @@ export function SeoOptimizerForm() {
             <div>
               <Label htmlFor="result-keywords" className="text-sm font-medium">Suggested Keywords</Label>
               <div className="flex items-center gap-2 mt-1">
-                <Input id="result-keywords" value={seoResult.keywords} readOnly className="mt-1 bg-muted/50"/>
+                <Input id="result-keywords" value={seoResult.keywords} readOnly className="mt-1 bg-muted/50" suppressHydrationWarning/>
                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(seoResult.keywords, "Suggested Keywords")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -181,7 +192,7 @@ export function SeoOptimizerForm() {
             </div>
           </CardContent>
           <CardFooter>
-             <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify(seoResult, null, 2), "All Results as JSON")}>
+             <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify(seoResult, null, 2), "All Results as JSON")} suppressHydrationWarning>
                 <Copy className="mr-2 h-4 w-4" /> Copy Results as JSON
               </Button>
           </CardFooter>
@@ -190,3 +201,4 @@ export function SeoOptimizerForm() {
     </div>
   );
 }
+

@@ -115,6 +115,7 @@ export function SeoBlogPackageForm() {
                         id="topic"
                         placeholder="e.g., The Ultimate Guide to Digital Marketing in 2024"
                         className="min-h-[100px] resize-y"
+                        suppressHydrationWarning
                         {...field}
                       />
                     </FormControl>
@@ -135,7 +136,7 @@ export function SeoBlogPackageForm() {
                       <FormLabel>Content Type</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger suppressHydrationWarning>
                             <SelectValue placeholder="Select content type" />
                           </SelectTrigger>
                         </FormControl>
@@ -158,7 +159,7 @@ export function SeoBlogPackageForm() {
                     <FormItem>
                       <FormLabel htmlFor="focusKeywords">Focus Keywords (Optional)</FormLabel>
                       <FormControl>
-                        <Input id="focusKeywords" placeholder="e.g., digital marketing, SEO strategies" {...field} />
+                        <Input id="focusKeywords" placeholder="e.g., digital marketing, SEO strategies" suppressHydrationWarning {...field} />
                       </FormControl>
                       <FormDescription>Comma-separated keywords.</FormDescription>
                       <FormMessage />
@@ -175,7 +176,7 @@ export function SeoBlogPackageForm() {
                     <FormItem>
                       <FormLabel htmlFor="targetAudience">Target Audience (Optional)</FormLabel>
                       <FormControl>
-                        <Input id="targetAudience" placeholder="e.g., small business owners, marketing managers" {...field} />
+                        <Input id="targetAudience" placeholder="e.g., small business owners, marketing managers" suppressHydrationWarning {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -189,7 +190,7 @@ export function SeoBlogPackageForm() {
                       <FormLabel>Desired Tone (Optional)</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger suppressHydrationWarning>
                             <SelectValue placeholder="Select desired tone" />
                           </SelectTrigger>
                         </FormControl>
@@ -215,7 +216,7 @@ export function SeoBlogPackageForm() {
                     <FormLabel>Approximate Word Count (Optional)</FormLabel>
                     <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger suppressHydrationWarning>
                           <SelectValue placeholder="Select approximate word count" />
                         </SelectTrigger>
                       </FormControl>
@@ -233,7 +234,7 @@ export function SeoBlogPackageForm() {
               />
             </CardContent>
             <CardFooter>
-              <Button type="submit" disabled={isLoading} className="w-full md:w-auto">
+              <Button type="submit" disabled={isLoading} className="w-full md:w-auto" suppressHydrationWarning>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -262,7 +263,7 @@ export function SeoBlogPackageForm() {
                 <div>
                 <Label htmlFor="result-title" className="text-sm font-medium">Generated Title</Label>
                 <div className="flex items-center gap-2 mt-1">
-                    <Input id="result-title" value={generatedPackage.title} readOnly className="bg-muted/50"/>
+                    <Input id="result-title" value={generatedPackage.title} readOnly className="bg-muted/50" suppressHydrationWarning/>
                     <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedPackage.title, "Title")}>
                     <Copy className="h-4 w-4" />
                     </Button>
@@ -271,7 +272,7 @@ export function SeoBlogPackageForm() {
                 <div>
                 <Label htmlFor="result-slug" className="text-sm font-medium">Suggested Slug</Label>
                 <div className="flex items-center gap-2 mt-1">
-                    <Input id="result-slug" value={generatedPackage.slug} readOnly className="bg-muted/50"/>
+                    <Input id="result-slug" value={generatedPackage.slug} readOnly className="bg-muted/50" suppressHydrationWarning/>
                     <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedPackage.slug, "Slug")}>
                     <Copy className="h-4 w-4" />
                     </Button>
@@ -282,7 +283,7 @@ export function SeoBlogPackageForm() {
             <div>
               <Label htmlFor="result-meta" className="text-sm font-medium">Meta Description</Label>
                <div className="flex items-center gap-2 mt-1">
-                <Textarea id="result-meta" value={generatedPackage.metaDescription} readOnly className="bg-muted/50 min-h-[80px]" />
+                <Textarea id="result-meta" value={generatedPackage.metaDescription} readOnly className="bg-muted/50 min-h-[80px]" suppressHydrationWarning/>
                 <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedPackage.metaDescription, "Meta Description")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -293,7 +294,7 @@ export function SeoBlogPackageForm() {
                 <div>
                 <Label htmlFor="result-keywords" className="text-sm font-medium">Suggested Keywords</Label>
                 <div className="flex items-center gap-2 mt-1">
-                    <Input id="result-keywords" value={generatedPackage.suggestedKeywords} readOnly className="bg-muted/50"/>
+                    <Input id="result-keywords" value={generatedPackage.suggestedKeywords} readOnly className="bg-muted/50" suppressHydrationWarning/>
                     <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedPackage.suggestedKeywords, "Keywords")}>
                     <Copy className="h-4 w-4" />
                     </Button>
@@ -302,7 +303,7 @@ export function SeoBlogPackageForm() {
                 <div>
                 <Label htmlFor="result-seo-score" className="text-sm font-medium">SEO Score</Label>
                 <div className="flex items-center gap-2 mt-1">
-                    <Input id="result-seo-score" value={generatedPackage.seoScore} readOnly className="bg-muted/50 font-semibold"/>
+                    <Input id="result-seo-score" value={generatedPackage.seoScore} readOnly className="bg-muted/50 font-semibold" suppressHydrationWarning/>
                     <BarChart className="h-5 w-5 text-primary" /> 
                 </div>
                 </div>
@@ -311,7 +312,7 @@ export function SeoBlogPackageForm() {
             <div>
               <Label htmlFor="result-outline" className="text-sm font-medium">Structured Outline (Markdown)</Label>
                <div className="flex items-start gap-2 mt-1">
-                <Textarea id="result-outline" value={generatedPackage.outline} readOnly className="mt-1 bg-muted/50 min-h-[200px] resize-y" />
+                <Textarea id="result-outline" value={generatedPackage.outline} readOnly className="mt-1 bg-muted/50 min-h-[200px] resize-y" suppressHydrationWarning/>
                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedPackage.outline, "Outline")}>
                   <Copy className="h-4 w-4" />
                   <ListOrdered className="h-4 w-4 ml-1 sr-only" /> {/* Icon for outline */}
@@ -322,7 +323,7 @@ export function SeoBlogPackageForm() {
             <div>
               <Label htmlFor="result-content" className="text-sm font-medium">Generated Content Body (Markdown)</Label>
                <div className="flex items-start gap-2 mt-1">
-                <Textarea id="result-content" value={generatedPackage.contentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" />
+                <Textarea id="result-content" value={generatedPackage.contentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" suppressHydrationWarning/>
                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedPackage.contentBody, "Content Body")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -330,7 +331,7 @@ export function SeoBlogPackageForm() {
             </div>
           </CardContent>
            <CardFooter>
-             <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify(generatedPackage, null, 2), "All Package Results as JSON")}>
+             <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify(generatedPackage, null, 2), "All Package Results as JSON")} suppressHydrationWarning>
                 <Copy className="mr-2 h-4 w-4" /> Copy Full Package as JSON
               </Button>
           </CardFooter>
@@ -339,3 +340,4 @@ export function SeoBlogPackageForm() {
     </div>
   );
 }
+

@@ -110,7 +110,7 @@ export function ContentImporterForm() {
                   <FormItem>
                     <FormLabel htmlFor="articleUrl">Article URL</FormLabel>
                     <FormControl>
-                      <Input id="articleUrl" placeholder="https://example.com/article-to-rewrite" {...field} />
+                      <Input id="articleUrl" placeholder="https://example.com/article-to-rewrite" suppressHydrationWarning {...field} />
                     </FormControl>
                     <FormDescription>
                       The full URL of the article you want to import and rewrite.
@@ -130,6 +130,7 @@ export function ContentImporterForm() {
                         id="customInstructions"
                         placeholder="e.g., Rewrite in a casual tone for young adults. Focus on sustainability aspects. Ensure keywords 'X', 'Y' are included."
                         className="min-h-[100px] resize-y"
+                        suppressHydrationWarning
                         {...field}
                       />
                     </FormControl>
@@ -142,7 +143,7 @@ export function ContentImporterForm() {
               />
             </CardContent>
             <CardFooter>
-              <Button type="submit" disabled={isLoading} className="w-full md:w-auto">
+              <Button type="submit" disabled={isLoading} className="w-full md:w-auto" suppressHydrationWarning>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -182,7 +183,7 @@ export function ContentImporterForm() {
                     <div>
                     <Label htmlFor="result-title" className="text-sm font-medium">Rewritten Title</Label>
                     <div className="flex items-center gap-2 mt-1">
-                        <Input id="result-title" value={rewriteResult.rewrittenTitle} readOnly className="bg-muted/50"/>
+                        <Input id="result-title" value={rewriteResult.rewrittenTitle} readOnly className="bg-muted/50" suppressHydrationWarning/>
                         <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(rewriteResult.rewrittenTitle, "Rewritten Title")}>
                         <Copy className="h-4 w-4" />
                         </Button>
@@ -191,7 +192,7 @@ export function ContentImporterForm() {
                     <div>
                     <Label htmlFor="result-meta" className="text-sm font-medium">Rewritten Meta Description</Label>
                     <div className="flex items-center gap-2 mt-1">
-                        <Textarea id="result-meta" value={rewriteResult.rewrittenMetaDescription} readOnly className="bg-muted/50 min-h-[80px]" />
+                        <Textarea id="result-meta" value={rewriteResult.rewrittenMetaDescription} readOnly className="bg-muted/50 min-h-[80px]" suppressHydrationWarning/>
                         <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(rewriteResult.rewrittenMetaDescription, "Rewritten Meta Description")}>
                         <Copy className="h-4 w-4" />
                         </Button>
@@ -200,7 +201,7 @@ export function ContentImporterForm() {
                     <div>
                       <Label htmlFor="result-keywords" className="text-sm font-medium">Suggested Keywords</Label>
                       <div className="flex items-center gap-2 mt-1">
-                          <Input id="result-keywords" value={rewriteResult.suggestedKeywords} readOnly className="bg-muted/50"/>
+                          <Input id="result-keywords" value={rewriteResult.suggestedKeywords} readOnly className="bg-muted/50" suppressHydrationWarning/>
                           <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(rewriteResult.suggestedKeywords, "Suggested Keywords")}>
                           <Copy className="h-4 w-4" />
                           </Button>
@@ -209,14 +210,14 @@ export function ContentImporterForm() {
                     <div>
                         <Label htmlFor="result-seo-score" className="text-sm font-medium">SEO Score</Label>
                         <div className="flex items-center gap-2 mt-1">
-                            <Input id="result-seo-score" value={rewriteResult.seoScore} readOnly className="bg-muted/50 font-semibold"/>
+                            <Input id="result-seo-score" value={rewriteResult.seoScore} readOnly className="bg-muted/50 font-semibold" suppressHydrationWarning/>
                             <BarChart className="h-5 w-5 text-primary" />
                         </div>
                     </div>
                     <div>
                     <Label htmlFor="result-content" className="text-sm font-medium">Rewritten Content (Markdown)</Label>
                     <div className="flex items-start gap-2 mt-1">
-                        <Textarea id="result-content" value={rewriteResult.rewrittenContentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" />
+                        <Textarea id="result-content" value={rewriteResult.rewrittenContentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" suppressHydrationWarning/>
                         <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(rewriteResult.rewrittenContentBody, "Rewritten Content Body")}>
                         <Copy className="h-4 w-4" />
                         </Button>
@@ -227,7 +228,7 @@ export function ContentImporterForm() {
           </CardContent>
            {!rewriteResult.detectedError && (rewriteResult.rewrittenTitle || rewriteResult.rewrittenMetaDescription || rewriteResult.rewrittenContentBody) && (
             <CardFooter>
-                <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify({ title: rewriteResult.rewrittenTitle, metaDescription: rewriteResult.rewrittenMetaDescription, suggestedKeywords: rewriteResult.suggestedKeywords, contentBody: rewriteResult.rewrittenContentBody, seoScore: rewriteResult.seoScore }, null, 2), "All Rewritten Results as JSON")}>
+                <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify({ title: rewriteResult.rewrittenTitle, metaDescription: rewriteResult.rewrittenMetaDescription, suggestedKeywords: rewriteResult.suggestedKeywords, contentBody: rewriteResult.rewrittenContentBody, seoScore: rewriteResult.seoScore }, null, 2), "All Rewritten Results as JSON")} suppressHydrationWarning>
                     <Copy className="mr-2 h-4 w-4" /> Copy Rewritten Results as JSON
                 </Button>
             </CardFooter>

@@ -112,6 +112,7 @@ export function ContentWriterForm() {
                         id="topic"
                         placeholder="Enter the main topic for your content..."
                         className="min-h-[100px] resize-y"
+                        suppressHydrationWarning
                         {...field}
                       />
                     </FormControl>
@@ -132,7 +133,7 @@ export function ContentWriterForm() {
                       <FormLabel>Content Type</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger suppressHydrationWarning>
                             <SelectValue placeholder="Select content type" />
                           </SelectTrigger>
                         </FormControl>
@@ -155,7 +156,7 @@ export function ContentWriterForm() {
                     <FormItem>
                       <FormLabel htmlFor="focusKeywords">Focus Keywords (Optional)</FormLabel>
                       <FormControl>
-                        <Input id="focusKeywords" placeholder="e.g., healthy recipes, vegan diet" {...field} />
+                        <Input id="focusKeywords" placeholder="e.g., healthy recipes, vegan diet" suppressHydrationWarning {...field} />
                       </FormControl>
                       <FormDescription>
                         Comma-separated keywords.
@@ -174,7 +175,7 @@ export function ContentWriterForm() {
                     <FormItem>
                       <FormLabel htmlFor="targetAudience">Target Audience (Optional)</FormLabel>
                       <FormControl>
-                        <Input id="targetAudience" placeholder="e.g., busy professionals, new parents" {...field} />
+                        <Input id="targetAudience" placeholder="e.g., busy professionals, new parents" suppressHydrationWarning {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -188,7 +189,7 @@ export function ContentWriterForm() {
                       <FormLabel>Desired Tone (Optional)</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger suppressHydrationWarning>
                             <SelectValue placeholder="Select desired tone" />
                           </SelectTrigger>
                         </FormControl>
@@ -214,7 +215,7 @@ export function ContentWriterForm() {
                     <FormLabel>Approximate Word Count (Optional)</FormLabel>
                     <Select onValueChange={(value) => field.onChange(parseInt(value))} defaultValue={field.value?.toString()}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger suppressHydrationWarning>
                           <SelectValue placeholder="Select approximate word count" />
                         </SelectTrigger>
                       </FormControl>
@@ -232,7 +233,7 @@ export function ContentWriterForm() {
               />
             </CardContent>
             <CardFooter>
-              <Button type="submit" disabled={isLoading} className="w-full md:w-auto">
+              <Button type="submit" disabled={isLoading} className="w-full md:w-auto" suppressHydrationWarning>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -257,7 +258,7 @@ export function ContentWriterForm() {
             <div>
               <Label htmlFor="result-title" className="text-sm font-medium">Generated Title</Label>
               <div className="flex items-center gap-2 mt-1">
-                <Input id="result-title" value={generatedContent.title} readOnly className="bg-muted/50"/>
+                <Input id="result-title" value={generatedContent.title} readOnly className="bg-muted/50" suppressHydrationWarning/>
                 <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedContent.title, "Title")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -266,7 +267,7 @@ export function ContentWriterForm() {
             <div>
               <Label htmlFor="result-meta" className="text-sm font-medium">Meta Description</Label>
                <div className="flex items-center gap-2 mt-1">
-                <Textarea id="result-meta" value={generatedContent.metaDescription} readOnly className="bg-muted/50 min-h-[80px]" />
+                <Textarea id="result-meta" value={generatedContent.metaDescription} readOnly className="bg-muted/50 min-h-[80px]" suppressHydrationWarning/>
                 <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedContent.metaDescription, "Meta Description")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -275,7 +276,7 @@ export function ContentWriterForm() {
              <div>
               <Label htmlFor="result-slug" className="text-sm font-medium">Suggested Slug</Label>
               <div className="flex items-center gap-2 mt-1">
-                <Input id="result-slug" value={generatedContent.slug} readOnly className="bg-muted/50"/>
+                <Input id="result-slug" value={generatedContent.slug} readOnly className="bg-muted/50" suppressHydrationWarning/>
                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedContent.slug, "Slug")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -284,7 +285,7 @@ export function ContentWriterForm() {
             <div>
               <Label htmlFor="result-keywords" className="text-sm font-medium">Suggested Keywords</Label>
               <div className="flex items-center gap-2 mt-1">
-                <Input id="result-keywords" value={generatedContent.suggestedKeywords} readOnly className="bg-muted/50"/>
+                <Input id="result-keywords" value={generatedContent.suggestedKeywords} readOnly className="bg-muted/50" suppressHydrationWarning/>
                 <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedContent.suggestedKeywords, "Keywords")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -293,14 +294,14 @@ export function ContentWriterForm() {
             <div>
               <Label htmlFor="result-seo-score" className="text-sm font-medium">SEO Score</Label>
               <div className="flex items-center gap-2 mt-1">
-                <Input id="result-seo-score" value={generatedContent.seoScore} readOnly className="bg-muted/50 font-semibold"/>
+                <Input id="result-seo-score" value={generatedContent.seoScore} readOnly className="bg-muted/50 font-semibold" suppressHydrationWarning/>
                 <BarChart className="h-5 w-5 text-primary" /> 
               </div>
             </div>
             <div>
               <Label htmlFor="result-content" className="text-sm font-medium">Generated Content (Markdown)</Label>
                <div className="flex items-start gap-2 mt-1">
-                <Textarea id="result-content" value={generatedContent.contentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" />
+                <Textarea id="result-content" value={generatedContent.contentBody} readOnly className="mt-1 bg-muted/50 min-h-[400px] resize-y" suppressHydrationWarning/>
                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(generatedContent.contentBody, "Content Body")}>
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -308,7 +309,7 @@ export function ContentWriterForm() {
             </div>
           </CardContent>
            <CardFooter>
-             <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify(generatedContent, null, 2), "All Results as JSON")}>
+             <Button variant="outline" onClick={() => handleCopyToClipboard(JSON.stringify(generatedContent, null, 2), "All Results as JSON")} suppressHydrationWarning>
                 <Copy className="mr-2 h-4 w-4" /> Copy All Results as JSON
               </Button>
           </CardFooter>

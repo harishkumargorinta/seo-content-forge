@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
@@ -108,7 +109,7 @@ export function ComparisonBuilderForm() {
                 <FormItem>
                   <FormLabel>Comparison Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Top Smartphones 2024" {...field} />
+                    <Input placeholder="e.g., Top Smartphones 2024" suppressHydrationWarning {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -129,6 +130,7 @@ export function ComparisonBuilderForm() {
                         variant="destructive"
                         size="sm"
                         onClick={() => removeItem(itemIndex)}
+                        suppressHydrationWarning
                       >
                         <Trash2 className="h-4 w-4 mr-1" /> Remove Item
                       </Button>
@@ -142,7 +144,7 @@ export function ComparisonBuilderForm() {
                         <FormItem>
                           <FormLabel>Item Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="e.g., iPhone 15 Pro" {...field} />
+                            <Input placeholder="e.g., iPhone 15 Pro" suppressHydrationWarning {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -155,7 +157,7 @@ export function ComparisonBuilderForm() {
                         <FormItem>
                           <FormLabel>Image URL (Optional)</FormLabel>
                           <FormControl>
-                            <Input placeholder="https://example.com/image.jpg" {...field} />
+                            <Input placeholder="https://example.com/image.jpg" suppressHydrationWarning {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -168,7 +170,7 @@ export function ComparisonBuilderForm() {
                         <FormItem>
                           <FormLabel>Short Description (Optional)</FormLabel>
                           <FormControl>
-                            <Textarea placeholder="A brief overview of the item." {...field} />
+                            <Textarea placeholder="A brief overview of the item." suppressHydrationWarning {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -183,6 +185,7 @@ export function ComparisonBuilderForm() {
                 variant="outline"
                 onClick={() => appendItem({ name: '', imageUrl: '', description: '', features: [{ key: '', value: '' }] })}
                 className="mt-2"
+                suppressHydrationWarning
               >
                 <PlusCircle className="h-4 w-4 mr-2" /> Add Another Item
               </Button>
@@ -194,7 +197,7 @@ export function ComparisonBuilderForm() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto">
+            <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto" suppressHydrationWarning>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -230,7 +233,7 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
               <FormItem className="flex-1">
                 <FormLabel className="text-xs">Feature Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g., Screen Size" {...field} />
+                  <Input placeholder="e.g., Screen Size" suppressHydrationWarning {...field} />
                 </FormControl>
                 <FormMessage className="text-xs"/>
               </FormItem>
@@ -243,7 +246,7 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
               <FormItem className="flex-1">
                 <FormLabel className="text-xs">Feature Value</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g., 6.1 inches" {...field} />
+                  <Input placeholder="e.g., 6.1 inches" suppressHydrationWarning {...field} />
                 </FormControl>
                 <FormMessage className="text-xs"/>
               </FormItem>
@@ -256,6 +259,7 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
               size="icon"
               className="h-9 w-9 shrink-0"
               onClick={() => removeFeature(featureIndex)}
+              suppressHydrationWarning
             >
               <Trash2 className="h-4 w-4 text-destructive" />
             </Button>
@@ -268,6 +272,7 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
         size="sm"
         onClick={() => appendFeature({ key: '', value: '' })}
         className="mt-1"
+        suppressHydrationWarning
       >
         <PlusCircle className="h-3 w-3 mr-1" /> Add Feature
       </Button>
@@ -278,3 +283,4 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
 
 // Need to ensure useState is imported if not already
 import { useState } from 'react';
+
