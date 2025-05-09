@@ -1,0 +1,46 @@
+"use client";
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { BotMessageSquare, Home, LayoutList, ListChecks, Settings2 } from 'lucide-react';
+import {
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
+
+const navItems = [
+  { href: '/', label: 'Dashboard', icon: Home },
+  { href: '/seo-optimizer', label: 'SEO Optimizer', icon: Settings2 },
+  { href: '/comparison-builder', label: 'Comparison Builder', icon: LayoutList },
+  { href: '/comparisons', label: 'View Comparisons', icon: ListChecks },
+];
+
+export function SidebarNav() {
+  const pathname = usePathname();
+
+  return (
+    <SidebarMenu>
+      {navItems.map((item) => (
+        <SidebarMenuItem key={item.href}>
+          <Link href={item.href} passHref legacyBehavior>
+            <SidebarMenuButton
+              asChild
+              className={cn(
+                pathname === item.href ? 'bg-sidebar-accent text-sidebar-accent-foreground' : ''
+              )}
+              isActive={pathname === item.href}
+              tooltip={item.label}
+            >
+              <a>
+                <item.icon className="h-5 w-5" />
+                <span>{item.label}</span>
+              </a>
+            </SidebarMenuButton>
+          </Link>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  );
+}
