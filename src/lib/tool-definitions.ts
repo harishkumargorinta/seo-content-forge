@@ -4,8 +4,10 @@ import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
   Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks,
-  Film, Youtube, Tags, Facebook, MessageSquarePlus, Hash // Added Facebook icon, MessageSquarePlus, Hash
+  Film, Youtube, Tags, Facebook, MessageSquarePlus, Hash, Brain, Zap, Users, Sparkles // Added Sparkles for benefits, ensured others are present
 } from 'lucide-react';
+
+export type ToolCategory = 'Content Creation' | 'SEO & Marketing' | 'Social Media' | 'Business & Branding' | 'Productivity';
 
 export interface ToolDefinition {
   slug: string;
@@ -15,16 +17,16 @@ export interface ToolDefinition {
   pageTitle: string;
   link: string;
   isComingSoon?: boolean;
-  isExisting?: boolean; // To differentiate from new tools for UI logic if needed
-  category?: 'Content Creation' | 'SEO & Marketing' | 'Business & Branding' | 'Productivity' | 'Social Media';
+  isExisting?: boolean;
+  category: ToolCategory;
 }
 
 export const allTools: ToolDefinition[] = [
-  // Existing Tools (can be refactored to use this structure too)
+  // Existing Tools
   {
     slug: 'seo-optimizer',
     title: 'SEO Optimizer',
-    description: 'Refine titles, meta descriptions, and keywords with AI analysis. Boost your organic reach.',
+    description: 'Refine content with AI analysis for titles, meta descriptions, and keywords to boost organic reach.',
     icon: Settings2,
     pageTitle: 'SEO Optimizer',
     link: '/seo-optimizer',
@@ -34,7 +36,7 @@ export const allTools: ToolDefinition[] = [
   {
     slug: 'content-writer',
     title: 'Content Writer',
-    description: 'Generate high-quality articles and blog posts with AI. Create unique, SEO-friendly content.',
+    description: 'Generate high-quality articles and blog posts. Create unique, SEO-friendly content effortlessly.',
     icon: PenSquare,
     pageTitle: 'Content Writer',
     link: '/content-writer',
@@ -43,18 +45,18 @@ export const allTools: ToolDefinition[] = [
   },
    {
     slug: 'content-importer',
-    title: 'Content Importer',
+    title: 'Article Rewriter',
     description: 'Fetch content from any URL and let AI rewrite it into fresh, unique, and optimized material.',
     icon: FileCode2,
-    pageTitle: 'Content Importer',
+    pageTitle: 'Content Importer & Rewriter',
     link: '/content-importer',
     isExisting: true,
     category: 'Content Creation',
   },
   {
     slug: 'comparison-builder',
-    title: 'Comparison Builder',
-    description: 'Create engaging side-by-side comparisons. Attract high-intent traffic and provide value.',
+    title: 'Comparison Table Builder',
+    description: 'Create engaging side-by-side comparison tables to attract high-intent traffic and provide value.',
     icon: LayoutList,
     pageTitle: 'Comparison Builder',
     link: '/comparison-builder',
@@ -64,19 +66,19 @@ export const allTools: ToolDefinition[] = [
   {
     slug: 'seo-blog-package',
     title: 'SEO Blog Package',
-    description: 'Generate a complete blog post: title, meta, outline, content, and SEO analysis.',
+    description: 'Generate a complete blog post: title, meta description, outline, full content, and SEO analysis.',
     icon: PackageCheck,
     pageTitle: 'SEO Blog Package Generator',
     link: '/seo-blog-package',
     isExisting: true,
     isComingSoon: false,
-    category: 'Content Creation', 
+    category: 'Content Creation',
   },
   {
     slug: 'youtube-title-generator',
     title: 'YouTube Title Generator',
-    description: 'Generate catchy, SEO-friendly titles for your YouTube videos with AI. Attract more viewers.',
-    icon: Youtube, 
+    description: 'Generate catchy, SEO-friendly titles for your YouTube videos. Attract more viewers instantly.',
+    icon: Youtube,
     pageTitle: 'YouTube Title Generator',
     link: '/youtube-title-generator',
     isExisting: true,
@@ -86,7 +88,7 @@ export const allTools: ToolDefinition[] = [
   {
     slug: 'youtube-description-tags',
     title: 'YouTube Description & Tags',
-    description: 'Generate SEO-optimized descriptions and relevant tags for YouTube videos based on script or title.',
+    description: 'Create SEO-optimized descriptions and relevant tags for YouTube videos from script or title.',
     icon: Tags,
     pageTitle: 'YouTube Description & Tags Generator',
     link: '/youtube-description-tags',
@@ -96,7 +98,7 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'facebook-title-generator',
-    title: 'Facebook Title Generator',
+    title: 'Facebook Post Titles',
     description: 'Craft engaging and click-worthy titles/headlines for your Facebook posts with AI assistance.',
     icon: Facebook,
     pageTitle: 'Facebook Title Generator',
@@ -107,9 +109,9 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'facebook-description-tags',
-    title: 'Facebook Desc & Hashtags',
-    description: 'Generate compelling descriptions and relevant hashtags for your Facebook posts.',
-    icon: MessageSquarePlus, // Or Hash
+    title: 'Facebook Desc. & Hashtags',
+    description: 'Generate compelling descriptions and relevant hashtags for your Facebook posts to boost engagement.',
+    icon: MessageSquarePlus,
     pageTitle: 'Facebook Description & Hashtags Generator',
     link: '/facebook-description-tags',
     isExisting: true,
@@ -119,18 +121,18 @@ export const allTools: ToolDefinition[] = [
   // New Tools (Coming Soon)
   {
     slug: 'blog-workflow',
-    title: 'Blog Workflow',
-    description: 'Streamline your blogging process from idea to publication with guided steps.',
+    title: 'Blog Workflow Assistant',
+    description: 'Streamline your blogging process from idea to publication with guided AI-powered steps and checklists.',
     icon: Workflow,
     pageTitle: 'Blog Workflow Tool',
     link: '/blog-workflow',
     isComingSoon: true,
-    category: 'Content Creation',
+    category: 'Productivity',
   },
   {
     slug: 'blog-tools',
-    title: 'Blog Tools',
-    description: 'A suite of utilities for bloggers: headline analyzers, readability checkers, and more.',
+    title: 'Advanced Blog Tools',
+    description: 'A suite of utilities for bloggers: headline analyzers, readability checkers, content repurposing, and more.',
     icon: GanttChartSquare,
     pageTitle: 'Blog Tools',
     link: '/blog-tools',
@@ -139,18 +141,18 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'copywriting-frameworks',
-    title: 'Copywriting Frameworks',
-    description: 'Generate persuasive copy using proven frameworks like AIDA, PAS, and FAB.',
+    title: 'Copywriting Frameworks (AIDA, PAS)',
+    description: 'Generate persuasive marketing copy using proven frameworks like AIDA, PAS, and FAB.',
     icon: Quote,
     pageTitle: 'Copywriting Frameworks',
     link: '/copywriting-frameworks',
     isComingSoon: true,
-    category: 'Content Creation',
+    category: 'SEO & Marketing',
   },
   {
     slug: 'book-chapter-writer',
-    title: 'Book Chapter Writer',
-    description: 'AI assistance for drafting chapters for your non-fiction book, focusing on structure.',
+    title: 'Book Chapter Writer (Non-Fiction)',
+    description: 'AI assistance for drafting well-structured chapters for your non-fiction book projects.',
     icon: BookText,
     pageTitle: 'Book Chapter Writer',
     link: '/book-chapter-writer',
@@ -159,8 +161,8 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'book-writing',
-    title: 'Book Writing Suite',
-    description: 'Comprehensive tools for your book writing journey, from outlining to character development.',
+    title: 'Comprehensive Book Writing Suite',
+    description: 'Tools for your entire book writing journey, from outlining and plot development to character arcs.',
     icon: BookOpen,
     pageTitle: 'Book Writing Tools',
     link: '/book-writing',
@@ -170,7 +172,7 @@ export const allTools: ToolDefinition[] = [
   {
     slug: 'employee-handbook',
     title: 'Employee Handbook Generator',
-    description: 'Create a professional employee handbook with standard policies and customizable sections.',
+    description: 'Create a professional employee handbook with standard policies and easily customizable sections.',
     icon: BookUser,
     pageTitle: 'Employee Handbook Generator',
     link: '/employee-handbook',
@@ -180,7 +182,7 @@ export const allTools: ToolDefinition[] = [
   {
     slug: 'product-management-tools',
     title: 'Product Management Toolkit',
-    description: 'Tools for product managers: user story generators, feature prioritization, and roadmap ideas.',
+    description: 'AI tools for product managers: user story generation, feature prioritization, and roadmap ideas.',
     icon: Blocks,
     pageTitle: 'Product Management Tools',
     link: '/product-management-tools',
@@ -189,7 +191,7 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'course-creator',
-    title: 'Course Creator Assistant',
+    title: 'Online Course Creator Assistant',
     description: 'Design and outline engaging online courses, generate module content, and create quiz questions.',
     icon: GraduationCap,
     pageTitle: 'Course Creator',
@@ -199,8 +201,8 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'branding-package',
-    title: 'Branding Package Generator',
-    description: 'Develop your brand identity with AI-generated mission statements, taglines, and more.',
+    title: 'AI Branding Package Generator',
+    description: 'Develop your brand identity with AI: mission statements, taglines, value propositions, and more.',
     icon: Palette,
     pageTitle: 'Branding Package Generator',
     link: '/branding-package',
@@ -209,8 +211,8 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'complete-brand-content',
-    title: 'Complete Brand Content',
-    description: 'Generate a full suite of brand content: website copy, social media posts, email templates.',
+    title: 'Complete Brand Content Suite',
+    description: 'Generate a full suite of on-brand content: website copy, social media posts, email templates.',
     icon: LibraryBig,
     pageTitle: 'Complete Brand Content Suite',
     link: '/complete-brand-content',
@@ -219,8 +221,8 @@ export const allTools: ToolDefinition[] = [
   },
   {
     slug: 'homepage-copy-writer',
-    title: 'Perfect Homepage Copy',
-    description: 'Craft compelling and conversion-focused copy for your website\'s homepage.',
+    title: 'Perfect Homepage Copywriter',
+    description: 'Craft compelling, engaging, and conversion-focused copy specifically for your website homepage.',
     icon: PanelTopOpen,
     pageTitle: 'Homepage Copy Writer',
     link: '/homepage-copy-writer',
@@ -233,3 +235,12 @@ export const getToolBySlug = (slug: string): ToolDefinition | undefined => {
   return allTools.find(tool => tool.slug === slug);
 };
 
+export const toolCategories: ToolCategory[] = ['Content Creation', 'SEO & Marketing', 'Social Media', 'Business & Branding', 'Productivity'];
+
+// Icons for benefits section on landing page
+export const BenefitIcons = {
+  Brain,
+  Zap,
+  Users,
+  Sparkles
+};
