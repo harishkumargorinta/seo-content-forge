@@ -189,9 +189,9 @@ export function YouTubeDescriptionTagsForm() {
                   <Copy className="h-4 w-4" />
                 </Button>
               </div>
-              <FormDescription className="mt-1">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Comma-separated list of suggested tags.
-              </FormDescription>
+              </p>
             </div>
           </CardContent>
            <CardFooter>
