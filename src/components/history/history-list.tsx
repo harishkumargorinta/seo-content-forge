@@ -2,12 +2,12 @@
 "use client";
 
 import { useGeneratedContentHistory } from '@/hooks/use-generated-content-history';
-import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem, SeoBlogPackageHistoryItem, YouTubeTitleGeneratorHistoryItem, YouTubeDescriptionTagsHistoryItem, FacebookTitleGeneratorHistoryItem } from '@/lib/history-types';
+import type { GeneratedHistoryItem, SeoHistoryItem, ContentWriterHistoryItem, ContentImporterHistoryItem, SeoBlogPackageHistoryItem, YouTubeTitleGeneratorHistoryItem, YouTubeDescriptionTagsHistoryItem, FacebookTitleGeneratorHistoryItem, FacebookDescriptionTagsHistoryItem } from '@/lib/history-types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags as TagsIcon, PackageCheck, ListOrdered, Youtube, Lightbulb, Facebook } from 'lucide-react';
+import { Loader2, Trash2, HistoryIcon, FileText, Settings2, PenSquare, FileCode2, Copy, BarChart, Tags as TagsIcon, PackageCheck, ListOrdered, Youtube, Lightbulb, Facebook, MessageSquarePlus, Hash, Info } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,6 +38,8 @@ function getIconForType(type: GeneratedHistoryItem['type']) {
       return <TagsIcon className="h-5 w-5 mr-2 text-red-600" />;
     case 'FACEBOOK_TITLE_GENERATION':
       return <Facebook className="h-5 w-5 mr-2 text-blue-600" />;
+    case 'FACEBOOK_DESCRIPTION_TAGS':
+      return <MessageSquarePlus className="h-5 w-5 mr-2 text-blue-700" />;
     default:
       return <FileText className="h-5 w-5 mr-2 text-primary" />;
   }
@@ -59,6 +61,8 @@ function getTypeName(type: GeneratedHistoryItem['type']) {
       return "YouTube Description & Tags";
     case 'FACEBOOK_TITLE_GENERATION':
       return "Facebook Title Generation";
+    case 'FACEBOOK_DESCRIPTION_TAGS':
+      return "Facebook Description & Hashtags";
     default:
       return "Generated Content";
   }
@@ -346,6 +350,40 @@ export function HistoryList() {
                         </Button>
                       </div>
                       <Button size="sm" variant="outline" className="mt-2" onClick={() => handleCopyToClipboard(JSON.stringify((item as FacebookTitleGeneratorHistoryItem).output, null, 2), "Full Facebook Titles Output")}>
+                        <Copy className="mr-2 h-3 w-3" /> Copy Full Output
+                      </Button>
+                    </>
+                  )}
+                  {item.type === 'FACEBOOK_DESCRIPTION_TAGS' && (
+                    <>
+                      <p><strong>Post Content Snippet:</strong> {(item as FacebookDescriptionTagsHistoryItem).input.postContent.substring(0, 100)}...</p>
+                      {(item as FacebookDescriptionTagsHistoryItem).input.keywords && <p><strong>Keywords:</strong> {(item as FacebookDescriptionTagsHistoryItem).input.keywords}</p>}
+                      <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1 flex items-center"><MessageSquarePlus className="h-4 w-4 mr-1"/>Generated Description:</h4>
+                        <div className="max-h-60 overflow-y-auto p-2 border rounded-md bg-background">
+                          <pre className="whitespace-pre-wrap text-xs">{(item as FacebookDescriptionTagsHistoryItem).output.postDescription}</pre>
+                        </div>
+                         <Button size="xs" variant="outline" className="mt-1" onClick={() => handleCopyToClipboard((item as FacebookDescriptionTagsHistoryItem).output.postDescription, "Facebook Post Description")}>
+                          <Copy className="mr-1 h-3 w-3" /> Copy Description
+                        </Button>
+                      </div>
+                       <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1 flex items-center"><Hash className="h-4 w-4 mr-1"/>Suggested Hashtags:</h4>
+                         <p className="p-2 border rounded-md bg-background text-xs">{(item as FacebookDescriptionTagsHistoryItem).output.suggestedHashtags}</p>
+                        <Button size="xs" variant="outline" className="mt-1" onClick={() => handleCopyToClipboard((item as FacebookDescriptionTagsHistoryItem).output.suggestedHashtags, "Facebook Hashtags")}>
+                          <Copy className="mr-1 h-3 w-3" /> Copy Hashtags
+                        </Button>
+                      </div>
+                      <div className="mt-2">
+                        <h4 className="font-semibold text-foreground mb-1 flex items-center"><Info className="h-4 w-4 mr-1"/>Effectiveness Tips:</h4>
+                        <div className="max-h-40 overflow-y-auto p-2 border rounded-md bg-background">
+                            <pre className="whitespace-pre-wrap text-xs">{(item as FacebookDescriptionTagsHistoryItem).output.effectivenessTips}</pre>
+                        </div>
+                        <Button size="xs" variant="outline" className="mt-1" onClick={() => handleCopyToClipboard((item as FacebookDescriptionTagsHistoryItem).output.effectivenessTips, "Effectiveness Tips")}>
+                          <Copy className="mr-1 h-3 w-3" /> Copy Tips
+                        </Button>
+                      </div>
+                      <Button size="sm" variant="outline" className="mt-2" onClick={() => handleCopyToClipboard(JSON.stringify((item as FacebookDescriptionTagsHistoryItem).output, null, 2), "Full Facebook Desc/Tags Output")}>
                         <Copy className="mr-2 h-3 w-3" /> Copy Full Output
                       </Button>
                     </>

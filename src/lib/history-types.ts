@@ -5,7 +5,8 @@ import type { RewriteImportedContentInput, RewriteImportedContentOutput } from '
 import type { SeoBlogPackageInput, SeoBlogPackageOutput } from '@/ai/flows/seo-blog-package-flow';
 import type { GenerateYouTubeTitlesInput, GenerateYouTubeTitlesOutput } from '@/ai/flows/youtube-title-generator-flow';
 import type { GenerateYouTubeDescriptionAndTagsInput, GenerateYouTubeDescriptionAndTagsOutput } from '@/ai/flows/youtube-description-tags-flow';
-import type { GenerateFacebookTitlesInput, GenerateFacebookTitlesOutput } from '@/ai/flows/facebook-title-generator-flow'; // Added
+import type { GenerateFacebookTitlesInput, GenerateFacebookTitlesOutput } from '@/ai/flows/facebook-title-generator-flow';
+import type { GenerateFacebookDescriptionTagsInput, GenerateFacebookDescriptionTagsOutput } from '@/ai/flows/facebook-description-tags-flow'; // Added
 
 export type GeneratedContentType = 
   | 'SEO_OPTIMIZATION' 
@@ -14,7 +15,8 @@ export type GeneratedContentType =
   | 'SEO_BLOG_PACKAGE'
   | 'YOUTUBE_TITLE_GENERATION'
   | 'YOUTUBE_DESCRIPTION_TAGS'
-  | 'FACEBOOK_TITLE_GENERATION'; // Added new type
+  | 'FACEBOOK_TITLE_GENERATION'
+  | 'FACEBOOK_DESCRIPTION_TAGS'; // Added new type
 
 export interface BaseHistoryItem {
   id: string; // Unique ID for the history item
@@ -59,10 +61,16 @@ export interface YouTubeDescriptionTagsHistoryItem extends BaseHistoryItem {
   output: GenerateYouTubeDescriptionAndTagsOutput;
 }
 
-export interface FacebookTitleGeneratorHistoryItem extends BaseHistoryItem { // Added
+export interface FacebookTitleGeneratorHistoryItem extends BaseHistoryItem {
   type: 'FACEBOOK_TITLE_GENERATION';
   input: GenerateFacebookTitlesInput;
   output: GenerateFacebookTitlesOutput;
+}
+
+export interface FacebookDescriptionTagsHistoryItem extends BaseHistoryItem { // Added
+  type: 'FACEBOOK_DESCRIPTION_TAGS';
+  input: GenerateFacebookDescriptionTagsInput;
+  output: GenerateFacebookDescriptionTagsOutput;
 }
 
 
@@ -73,7 +81,8 @@ export type GeneratedHistoryItem =
   | SeoBlogPackageHistoryItem
   | YouTubeTitleGeneratorHistoryItem
   | YouTubeDescriptionTagsHistoryItem
-  | FacebookTitleGeneratorHistoryItem; // Added new type to union
+  | FacebookTitleGeneratorHistoryItem
+  | FacebookDescriptionTagsHistoryItem; // Added new type to union
 
 // Utility type for adding history items, omitting the id and timestamp as they'll be generated
 export type NewSeoHistoryData = Omit<SeoHistoryItem, 'id' | 'timestamp'>;
@@ -82,7 +91,8 @@ export type NewContentImporterHistoryData = Omit<ContentImporterHistoryItem, 'id
 export type NewSeoBlogPackageHistoryData = Omit<SeoBlogPackageHistoryItem, 'id' | 'timestamp'>;
 export type NewYouTubeTitleGeneratorHistoryData = Omit<YouTubeTitleGeneratorHistoryItem, 'id' | 'timestamp'>; 
 export type NewYouTubeDescriptionTagsHistoryData = Omit<YouTubeDescriptionTagsHistoryItem, 'id' | 'timestamp'>;
-export type NewFacebookTitleGeneratorHistoryData = Omit<FacebookTitleGeneratorHistoryItem, 'id' | 'timestamp'>; // Added
+export type NewFacebookTitleGeneratorHistoryData = Omit<FacebookTitleGeneratorHistoryItem, 'id' | 'timestamp'>;
+export type NewFacebookDescriptionTagsHistoryData = Omit<FacebookDescriptionTagsHistoryItem, 'id' | 'timestamp'>; // Added
 
 
 export type NewGeneratedHistoryItemData = 
@@ -92,4 +102,5 @@ export type NewGeneratedHistoryItemData =
   | NewSeoBlogPackageHistoryData
   | NewYouTubeTitleGeneratorHistoryData
   | NewYouTubeDescriptionTagsHistoryData
-  | NewFacebookTitleGeneratorHistoryData; // Added new type to union
+  | NewFacebookTitleGeneratorHistoryData
+  | NewFacebookDescriptionTagsHistoryData; // Added new type to union

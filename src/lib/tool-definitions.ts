@@ -4,7 +4,7 @@ import {
   Workflow, GanttChartSquare, Quote, BookText, BookOpen, PackageCheck,
   BookUser, Blocks, GraduationCap, Palette, LibraryBig, PanelTopOpen,
   Settings2, PenSquare, LayoutList, FileCode2, Wrench, History, Globe, Home, ListChecks,
-  Film, Youtube, Tags, Facebook // Added Facebook icon
+  Film, Youtube, Tags, Facebook, MessageSquarePlus, Hash // Added Facebook icon, MessageSquarePlus, Hash
 } from 'lucide-react';
 
 export interface ToolDefinition {
@@ -101,6 +101,17 @@ export const allTools: ToolDefinition[] = [
     icon: Facebook,
     pageTitle: 'Facebook Title Generator',
     link: '/facebook-title-generator',
+    isExisting: true,
+    isComingSoon: false,
+    category: 'Social Media',
+  },
+  {
+    slug: 'facebook-description-tags',
+    title: 'Facebook Desc & Hashtags',
+    description: 'Generate compelling descriptions and relevant hashtags for your Facebook posts.',
+    icon: MessageSquarePlus, // Or Hash
+    pageTitle: 'Facebook Description & Hashtags Generator',
+    link: '/facebook-description-tags',
     isExisting: true,
     isComingSoon: false,
     category: 'Social Media',
