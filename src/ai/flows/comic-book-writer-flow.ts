@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview An AI agent for generating kids' comic book scripts.
@@ -64,9 +63,9 @@ Instructions:
 1.  **Comic Title**: Create a catchy, simple, and age-appropriate title for this comic story.
 2.  **Character Summary**: Briefly restate or summarize the main characters that will be in this story.
 3.  **Panels (Array of Objects)**: Generate an array of approximately {{approximatePanels}} comic panel objects. Each panel object must include:
-    *   `panelNumber` (number): A sequential number for the panel.
-    *   `sceneDescription` (string): A concise visual description of what is happening in the panel. Describe the setting, character actions, and expressions. This should guide an illustrator. Make it vivid but simple.
-    *   `dialogueOrCaption` (string): All character dialogue or narrative captions for the panel.
+    *   "panelNumber" (number): A sequential number for the panel.
+    *   "sceneDescription" (string): A concise visual description of what is happening in the panel. Describe the setting, character actions, and expressions. This should guide an illustrator. Make it vivid but simple.
+    *   "dialogueOrCaption" (string): All character dialogue or narrative captions for the panel.
         *   For dialogue, use the format: "CharacterName: Their dialogue line."
         *   For narrative captions, use the format: "CAPTION: The narrative text."
         *   Ensure dialogue is simple, age-appropriate for {{targetAgeGroup}}, and moves the story forward.
