@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
@@ -15,6 +14,7 @@ import { PlusCircle, Trash2, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation'; // for redirecting
 import { Separator } from '@/components/ui/separator';
 import type { Comparison, ComparisonItem, ComparisonFeature } from '@/lib/types'; // Import types
+import { useState } from 'react';
 
 const featureSchema = z.object({
   key: z.string().min(1, "Feature name is required."),
@@ -225,7 +225,7 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
     <div className="space-y-3 pl-4 border-l-2 border-primary/50">
       <h5 className="text-sm font-medium text-muted-foreground">Features:</h5>
       {featureFields.map((feature, featureIndex) => (
-        <div key={feature.id} className="flex gap-2 items-end p-2 border rounded-md bg-background">
+        <div key={feature.id} className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-end p-3 border rounded-md bg-background">
           <FormField
             control={control}
             name={`items.${itemIndex}.features.${featureIndex}.key`}
@@ -257,7 +257,7 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
               type="button"
               variant="ghost"
               size="icon"
-              className="h-9 w-9 shrink-0"
+              className="h-9 w-9 shrink-0 self-end sm:self-auto"
               onClick={() => removeFeature(featureIndex)}
               suppressHydrationWarning
             >
@@ -280,7 +280,3 @@ function FeatureArray({ control, itemIndex }: { control: any, itemIndex: number 
     </div>
   );
 }
-
-// Need to ensure useState is imported if not already
-import { useState } from 'react';
-
